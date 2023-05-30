@@ -14,7 +14,7 @@ CREATE TABLE Mobil (
 CREATE TABLE Users (
   id_user SERIAL PRIMARY KEY,
   username VARCHAR(50) UNIQUE NOT NULL,
-  password VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
   phone_no VARCHAR(20) CHECK (phone_no ~ '^[0-9]+$'),
   is_dealer BOOLEAN DEFAULT false NOT NULL,
