@@ -14,9 +14,9 @@ CREATE TABLE Mobil (
 CREATE TABLE Users (
   id_user SERIAL PRIMARY KEY,
   username VARCHAR(50) UNIQUE NOT NULL,
-  password VARCHAR(50) UNIQUE NOT NULL,
+  password VARCHAR(255) UNIQUE NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
-  no_telp VARCHAR(20) CHECK (no_telp ~ '^[0-9]+$'),
+  phone_no VARCHAR(20) CHECK (phone_no ~ '^[0-9]+$'),
   is_dealer BOOLEAN DEFAULT false NOT NULL,
   name VARCHAR(255),
   birth_date DATE,
@@ -83,7 +83,7 @@ VALUES
   ('Mobil J', 2022, 30000, 24, 'Automatic', 'SUV', 'Deskripsi Mobil J');
 
 -- Entry untuk table user
-INSERT INTO Users (username, password, email, no_telp, is_dealer, name, birth_date, address)
+INSERT INTO Users (username, password, email, phone_no, is_dealer, name, birth_date, address)
 VALUES
   ('user1', 'password1', 'user1@example.com', '1234567890', false, 'User 1', '1990-01-01', 'Alamat User 1'),
   ('user2', 'password2', 'user2@example.com', '9876543210', false, 'User 2', '1995-05-15', 'Alamat User 2'),
