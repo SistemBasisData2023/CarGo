@@ -1,31 +1,11 @@
-// const axios = require("axios");
-
-// const options = {
-//   method: "GET",
-//   url: "https://api.football-data.org/v4/competitions/PL/matches",
-//   headers: {
-//     "X-Auth-Token": "2b27b414aeaf425faa34d897d3375ac0",
-//   },
-// };
-
-// async function fetchData() {
-//   try {
-//     const response = await axios.request(options);
-//     console.log(response.data);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
-// fetchData();
-
-//import packages
 const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 dotenv.config();
-const { connectToDB } = require("./config/connectToDb");
-const loginRegisterRoute = require("./routes/loginRegisterRoute");
+const cors = require('cors');
+const { connectToDB } = require("./src/config/connectToDb");
+const loginRoutes = require("./src/routes/loginRoute");
+const mainRoutes = require("./src/routes/mainRoute");
 
 //initialize the app as an express app
 const app = express();
@@ -38,10 +18,12 @@ const bcrypt = require("bcrypt");
 connectToDB();
 
 //Middleware
+app.use(cors());
 app.use(express.json());
 
 //Routes
-app.use("/", loginRegisterRoute);
+// app.use("/login", loginRoutes);
+app.use("/", mainRoutes)
 
 //listen on port
 app.listen(PORT, () => {
