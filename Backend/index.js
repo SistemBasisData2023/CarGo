@@ -20,9 +20,11 @@ connectToDB();
 //Middleware
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 //Routes
-// app.use("/login", loginRoutes);
+app.use("/", loginRoutes);
 app.use("/", mainRoutes)
 
 //listen on port

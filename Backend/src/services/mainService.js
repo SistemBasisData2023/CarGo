@@ -12,4 +12,20 @@ async function getAllUsers() {
     }
 }
 
-module.exports = { getAllUsers };
+async function deleteOneUser(user){
+    const { username } = user;
+    const query = `DELETE FROM users WHERE username = $1`;
+    const values = [username];
+    const result = await db.query(query, values);
+    if(result.rowCount === 1){
+        return {
+            message: 'User deleted successfully'
+        }
+    }else{
+        return {
+            message: 'Failed to delete user'
+        }
+    }
+}
+
+module.exports = { getAllUsers, deleteOneUser };
