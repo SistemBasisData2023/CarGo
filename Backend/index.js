@@ -7,6 +7,7 @@ const { connectToDB } = require("./src/config/connectToDb");
 const loginRoutes = require("./src/routes/loginRoute");
 const mainRoutes = require("./src/routes/mainRoute");
 const findRoutes = require("./src/routes/findRoute");
+const paymentRoutes = require("./src/routes/paymentRoutes");
 
 //initialize the app as an express app
 const app = express();
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use("/", loginRoutes);
 app.use("/", mainRoutes);
 app.use("/", findRoutes);
+app.use("/", paymentRoutes);
 
 //listen on port
 app.listen(PORT, () => {

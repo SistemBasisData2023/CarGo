@@ -23,7 +23,7 @@ async function deleteOneUser(user){
         }
     }else{
         return {
-            message: 'Failed to delete user'
+            message: 'No user found'
         }
     }
 }
@@ -39,7 +39,7 @@ async function updateOneUser(user){
         }
     }else{
         return {
-            message: 'Failed to update user'
+            message: 'No user found'
         }
     }
 }
@@ -55,7 +55,7 @@ async function addOneUser(user){
         }
     }else{
         return {
-            message: 'Failed to add user'
+            message: 'No user found'
         }
     }
 }
@@ -83,7 +83,7 @@ async function deleteOneMobil(mobil){
         }
     }else{
         return {
-            message: 'Failed to delete mobil'
+            message: 'No mobil found'
         }
     }
 }
@@ -99,7 +99,7 @@ async function updateOneMobil(mobil){
         }
     }else{
         return {
-            message: 'Failed to update mobil'
+            message: 'No mobil found'
         }
     }
 }
@@ -149,9 +149,9 @@ async function deleteOneOrder(order){
 }
 
 async function updateOneOrder(order){
-    const { id_order, id_user, id_mobil, order_date, shipping_date, zipcode, quantity, total_payment, amount_paid } = order;
-    const query = 'UPDATE orders SET id_user = $2, id_mobil = $3, order_date = $4, shipping_date = $5, zipcode = $6, quantity = $7, total_payment = $8, amount_paid = $9 WHERE id_order = $1';
-    const values = [id_order, id_user, id_mobil, order_date, shipping_date, zipcode, quantity, total_payment, amount_paid];
+    const { id_order, id_user, id_mobil, order_date, shipping_date, zipcode, quantity, total_payment, amount_paid , status } = order;
+    const query = 'UPDATE orders SET id_user = $2, id_mobil = $3, order_date = $4, shipping_date = $5, zipcode = $6, quantity = $7, total_payment = $8, amount_paid = $9 status = $10 WHERE id_order = $1';
+    const values = [id_order, id_user, id_mobil, order_date, shipping_date, zipcode, quantity, total_payment, amount_paid, status];
     const result = await db.query(query, values);
     if(result.rowCount > 0){
         return {
@@ -165,8 +165,8 @@ async function updateOneOrder(order){
 }
 
 async function addOneOrder(order){
-    const { id_user, id_mobil, order_date, shipping_date, zip_code, quantity, total_payment, amount_paid } = order;
-    const query = 'INSERT INTO orders (id_user, id_mobil, order_date, shipping_date, zip_code, quantity, total_payment, amount_paid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
+    const { id_user, id_mobil, order_date, shipping_date, zip_code, quantity, total_payment, amount_paid, status } = order;
+    const query = 'INSERT INTO orders (id_user, id_mobil, order_date, shipping_date, zip_code, quantity, total_payment, amount_paid, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
     const values = [id_user, id_mobil, order_date, shipping_date, zip_code, quantity, total_payment, amount_paid];
     const result = await db.query(query, values);
     if(result.rowCount > 0){

@@ -23,8 +23,17 @@ async function updateOneUser(req, res) {
     try {
         const result = await mainServices.updateOneUser(req.body);
         res.status(200).json({ message: result});
-    } catch (error) {
-        res.status(400).json({ message: err.message });
+    } catch (err) {
+        if(err.code == "23502"){
+            let errMessage = "User " + err.column + " cannot be empty";
+            res.status(400).json({ message: errMessage });
+        }else if(err.code == "23505" && err.constraint == "users_username_key"){
+            res.status(400).json({ message: "Username already exists" });
+        }else if(err.code == "23505" && err.constraint == "users_email_key"){
+            res.status(400).json({ message: "Email already exists" });
+        }else{
+            res.status(400).json({ message: err.message });
+        }
     }
 }
 
@@ -32,8 +41,17 @@ async function addOneUser(req, res) {
     try {
         const result = await mainServices.addOneUser(req.body);
         res.status(200).json({ message: result});
-    } catch (error) {
-        res.status(400).json({ message: err.message });
+    } catch (err) {
+        if(err.code == "23502"){
+            let errMessage = "User " + err.column + " cannot be empty";
+            res.status(400).json({ message: errMessage });
+        }else if(err.code == "23505" && err.constraint == "users_username_key"){
+            res.status(400).json({ message: "Username already exists" });
+        }else if(err.code == "23505" && err.constraint == "users_email_key"){
+            res.status(400).json({ message: "Email already exists" });
+        }else{
+            res.status(400).json({ message: err.message });
+        }
     }
 }
 
@@ -60,8 +78,13 @@ async function updateOneMobil(req, res) {
     try {
         const result = await mainServices.updateOneMobil(req.body);
         res.status(200).json({ message: result});
-    } catch (error) {
-        res.status(400).json({ message: err.message });
+    } catch (err) {
+        if(err.code == "23502"){
+            let errMessage = "Mobil " + err.column + " must not be empty";
+            res.status(400).json({ message: errMessage });
+        }else{
+            res.status(400).json({ message: err.message });
+        }
     }
 }
 
@@ -70,7 +93,12 @@ async function addOneMobil(req, res) {
         const result = await mainServices.addOneMobil(req.body);
         res.status(200).json({ message: result});
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        if(err.code == "23502"){
+            let errMessage = "Mobil " + err.column + " must not be empty";
+            res.status(400).json({ message: errMessage });
+        }else{
+            res.status(400).json({ message: err.message });
+        }
     }
 }
 
@@ -97,7 +125,12 @@ async function updateOneOrder(req, res) {
         const result = await mainServices.updateOneOrder(req.body);
         res.status(200).json({ message: result});
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        if(err.code == "23502"){
+            let errMessage = "Order " + err.column + " must not be empty";
+            res.status(400).json({ message: errMessage });
+        }else{
+            res.status(400).json({ message: err.message });
+        }
     }
 }
 
@@ -106,7 +139,12 @@ async function addOneOrder(req, res) {
         const result = await mainServices.addOneOrder(req.body);
         res.status(200).json({ message: result });
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        if(err.code == "23502"){
+            let errMessage = "Order " + err.column + " must not be empty";
+            res.status(400).json({ message: errMessage });
+        }else{
+            res.status(400).json({ message: err.message });
+        }
     }
 }
 
