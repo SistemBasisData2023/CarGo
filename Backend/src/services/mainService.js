@@ -1,4 +1,5 @@
 const { db } = require('../config/connectToDb');
+const bcrypt = require("bcrypt");
 
 async function getAllUser() {
     const query = 'SELECT * FROM users';
@@ -30,8 +31,9 @@ async function deleteOneUser(user){
 
 async function updateOneUser(user){
     const { id, username, password, email, phone_no, is_dealer, name, birth_date, address } = user;
+    const pass = await bcrypt.hash(password, 10);
     const query = 'UPDATE users SET username = $2, password = $3, email = $4, phone_no = $5, is_dealer = &6 name = $7, birth_date = $8, address = $9 WHERE id_user = $1';
-    const values = [id, username, password, email, phone_no, is_dealer, name, birth_date, address];
+    const values = [id, username, pass, email, phone_no, is_dealer, name, birth_date, address];
     const result = await db.query(query, values);
     if(result.rowCount > 0){
         return {
@@ -46,6 +48,7 @@ async function updateOneUser(user){
 
 async function addOneUser(user){
     const { username, password, email, phone_no, is_dealer, name, birth_date, address } = user;
+    const pass = await bcrypt.hash(password, 10);
     const query = 'INSERT INTO users VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)';
     const values = [username, password, email, phone_no, is_dealer, name, birth_date, address];
     const result = await db.query(query, values);
@@ -167,7 +170,7 @@ async function updateOneOrder(order){
 async function addOneOrder(order){
     const { id_user, id_mobil, order_date, shipping_date, zip_code, quantity, total_payment, amount_paid, status } = order;
     const query = 'INSERT INTO orders (id_user, id_mobil, order_date, shipping_date, zip_code, quantity, total_payment, amount_paid, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
-    const values = [id_user, id_mobil, order_date, shipping_date, zip_code, quantity, total_payment, amount_paid];
+    const values = [id_user, id_mobil, order_date, shipping_date, zip_code, quantity, total_payment, amount_paid, status];
     const result = await db.query(query, values);
     if(result.rowCount > 0){
         return {

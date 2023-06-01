@@ -1,9 +1,9 @@
 -- Tabel Mobil
 CREATE TABLE Mobil (
   id_mobil SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  year INTEGER NOT NULL,
-  price NUMERIC(20, 4) NOT NULL,
+  name VARCHAR(255) NOT NULL CHECK (length(name) > 0),
+  year INTEGER NOT NULL CHECK (year > 0),
+  price NUMERIC(20, 4) NOT NULL CHECK (price > 0),
   mpg VARCHAR(10),
   transmission VARCHAR(50),
   type VARCHAR(50),
@@ -13,9 +13,9 @@ CREATE TABLE Mobil (
 -- Tabel User
 CREATE TABLE Users (
   id_user SERIAL PRIMARY KEY,
-  username VARCHAR(50) UNIQUE NOT NULL,
+  username VARCHAR(50) UNIQUE NOT NULL CHECK (length(username) > 0),
   password VARCHAR(255) NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL CHECK (length(email) > 0),
   phone_no VARCHAR(20) CHECK (phone_no ~ '^[0-9]+$'),
   is_dealer BOOLEAN DEFAULT false NOT NULL,
   name VARCHAR(255),
@@ -34,8 +34,8 @@ CREATE TABLE Orders (
   shipping_date DATE NOT NULL,
   zip_code VARCHAR(10) CHECK (zip_code ~ '^[0-9]+$') NOT NULL,
   quantity INTEGER NOT NULL,
-  total_payment NUMERIC(20, 4) NOT NULL,
-  amount_paid NUMERIC(20, 4) DEFAULT 0 NOT NULL,
+  total_payment NUMERIC(20, 4) NOT NULL CHECK (total_payment > 0),
+  amount_paid NUMERIC(20, 4) DEFAULT 0 NOT NULL CHECK (amount_paid >= 0),
   status payment_status DEFAULT 'PENDING' NOT NULL
 );
 
@@ -56,16 +56,16 @@ VALUES
 -- Entry untuk table user
 INSERT INTO Users (username, password, email, phone_no, is_dealer, name, birth_date, address)
 VALUES
-  ('user1', 'password1', 'user1@example.com', '1234567890', false, 'User 1', '1990-01-01', 'Alamat User 1'),
-  ('user2', 'password2', 'user2@example.com', '9876543210', false, 'User 2', '1995-05-15', 'Alamat User 2'),
-  ('user3', 'password3', 'user3@example.com', '5555555555', false, 'User 3', '1988-07-10', 'Alamat User 3'),
-  ('user4', 'password4', 'user4@example.com', '1111111111', false, 'User 4', '1992-11-25', 'Alamat User 4'),
-  ('user5', 'password5', 'user5@example.com', '9999999999', false, 'User 5', '1997-03-20', 'Alamat User 5'),
-  ('user6', 'password6', 'user6@example.com', '4444444444', false, 'User 6', '1985-09-08', 'Alamat User 6'),
-  ('user7', 'password7', 'user7@example.com', '7777777777', false, 'User 7', '1993-12-12', 'Alamat User 7'),
-  ('user8', 'password8', 'user8@example.com', '2222222222', false, 'User 8', '1998-06-05', 'Alamat User 8'),
-  ('user9', 'password9', 'user9@example.com', '6666666666', false, 'User 9', '1991-04-30', 'Alamat User 9'),
-  ('user10', 'password10', 'user10@example.com', '8888888888', true, 'User 10', '1996-02-18', 'Alamat User 10');
+  ('user1', 'Passw0rd!', 'user1@example.com', '1234567890', false, 'User 1', '1990-01-01', 'Alamat User 1'),
+  ('user2', 'Secure@123', 'user2@example.com', '9876543210', false, 'User 2', '1995-05-15', 'Alamat User 2'),
+  ('user3', 'G0Od&Str0ng', 'user3@example.com', '5555555555', false, 'User 3', '1988-07-10', 'Alamat User 3'),
+  ('user4', 'Ex@mpl3&123', 'user4@example.com', '1111111111', false, 'User 4', '1992-11-25', 'Alamat User 4'),
+  ('user5', 'Examp1e@', 'user5@example.com', '9999999999', false, 'User 5', '1997-03-20', 'Alamat User 5'),
+  ('user6', 'P@ssw0rd!123', 'user6@example.com', '4444444444', false, 'User 6', '1985-09-08', 'Alamat User 6'),
+  ('user7', '1234!Abc', 'user7@example.com', '7777777777', false, 'User 7', '1993-12-12', 'Alamat User 7'),
+  ('user8', '$tr0ngP@$$', 'user8@example.com', '2222222222', false, 'User 8', '1998-06-05', 'Alamat User 8'),
+  ('user9', 'P@$$w0rd1', 'user9@example.com', '6666666666', false, 'User 9', '1991-04-30', 'Alamat User 9'),
+  ('user10', '!nCr3d1bl3$', 'user10@example.com', '8888888888', true, 'User 10', '1996-02-18', 'Alamat User 10');
 
 -- Entry untuk table order
 INSERT INTO Orders (id_user, id_mobil, order_date, shipping_date, zip_code, quantity, total_payment, amount_paid, status)
