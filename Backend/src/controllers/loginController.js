@@ -5,7 +5,20 @@ async function login(req, res) {
         const result = await loginServices.login(req.body);
         res.status(200).json(result);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        if(err.code == "23514"){
+            let col = err.constraint.split("_")[1];
+            let errMessage = "User " + col + " cannot be empty";
+            res.status(400).json({ message: errMessage });
+        }else if(err.code == "23502"){
+            let errMessage = "Missing " + err.column + " attribute";
+            res.status(400).json({ message: errMessage });
+        }else if(err.code == "23505" && err.constraint == "users_username_key"){
+            res.status(400).json({ message: "Username already exists" });
+        }else if(err.code == "23505" && err.constraint == "users_email_key"){
+            res.status(400).json({ message: "Email already exists" });
+        }else{
+            res.status(400).json({ message: err.message });
+        }
     }
 }
 
@@ -14,7 +27,20 @@ async function register(req, res) {
         const result = await loginServices.register(req.body);
         res.status(200).json(result);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        if(err.code == "23514"){
+            let col = err.constraint.split("_")[1];
+            let errMessage = "User " + col + " cannot be empty";
+            res.status(400).json({ message: errMessage });
+        }else if(err.code == "23502"){
+            let errMessage = "Missing " + err.column + " attribute";
+            res.status(400).json({ message: errMessage });
+        }else if(err.code == "23505" && err.constraint == "users_username_key"){
+            res.status(400).json({ message: "Username already exists" });
+        }else if(err.code == "23505" && err.constraint == "users_email_key"){
+            res.status(400).json({ message: "Email already exists" });
+        }else{
+            res.status(400).json({ message: err.message });
+        }
     }
 }
 
