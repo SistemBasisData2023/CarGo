@@ -8,6 +8,7 @@ CREATE TABLE Mobil (
   transmission VARCHAR(50),
   type VARCHAR(50),
   description TEXT
+  image_url TEXT
 );
 
 -- Tabel User

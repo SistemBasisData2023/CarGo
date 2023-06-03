@@ -92,9 +92,9 @@ async function deleteOneMobil(mobil){
 }
 
 async function updateOneMobil(mobil){
-    const { id, name, year, price, mpg, transmission, type, description } = mobil;
-    const query = 'UPDATE mobil SET name = $2, year = $3, price = $4, mpg = $5, transmission = $6, type = $7, description = $8 WHERE id_mobil = $1';
-    const values = [id, name, year, price, mpg, transmission, type, description];
+    const { id, name, year, price, mpg, transmission, type, description, url } = mobil;
+    const query = 'UPDATE mobil SET name = $2, year = $3, price = $4, mpg = $5, transmission = $6, type = $7, description = $8, image_url = $9 WHERE id_mobil = $1';
+    const values = [id, name, year, price, mpg, transmission, type, description, url];
     const result = await db.query(query, values);
     if(result.rowCount > 0){
         return {
@@ -108,9 +108,9 @@ async function updateOneMobil(mobil){
 }
 
 async function addOneMobil(mobil){
-    const { name, year, price, mpg, transmission, type, description } = mobil;
-    const query = 'INSERT INTO mobil VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7)';
-    const values = [name, year, price, mpg, transmission, type, description];
+    const { name, year, price, mpg, transmission, type, description, url } = mobil;
+    const query = 'INSERT INTO mobil VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)';
+    const values = [name, year, price, mpg, transmission, type, description, url];
     const result = await db.query(query, values);
     if(result.rowCount > 0){
         return {
