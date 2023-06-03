@@ -10,7 +10,7 @@ router.get('/findUserByEmail', findControllers.findUserByEmail);
 router.get('/findMobilById', findControllers.findMobilById);
 router.get('/findMobilByName', findControllers.findMobilByName);
 
-router.get('/findOrderById', findControllers.findOrderByOrderId);
+router.get('/findOrderByOrderId', findControllers.findOrderByOrderId);
 router.get('/findOrderByUserId', findControllers.findOrderByUserId);
 router.get('/findOrderByMobilId', findControllers.findOrderByMobilId);
 
