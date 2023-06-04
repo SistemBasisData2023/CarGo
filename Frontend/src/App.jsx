@@ -6,8 +6,8 @@ import About from "./about/About"
 
 const App = () => {
   return (
-    <div className="flex h-screen">
-      <div className="m-auto">
+    <div>
+      <div>
         <div>
           <NavBar />
         </div>

@@ -1,7 +1,24 @@
+// import { register } from 'swiper/element/bundle';
+
+// register();
+
+// const ImageSwiper = () => {
+//   return (
+//     <swiper-container slides-per-view="auto" speed="500" loop="true" css-mode="true" navigation="true">
+//       <swiper-slide>Slide 1</swiper-slide>
+//       <swiper-slide>Slide 2</swiper-slide>
+//       <swiper-slide>Slide 3</swiper-slide>
+//       ...
+//     </swiper-container>
+//   )
+// }
+
+// export default ImageSwiper;
+
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 
-const ImageSlider = () => {
+const ImageSwiper = () => {
   const images = [
     { name : "Car 1", src : "https://static01.nyt.com/images/2020/10/30/business/30wheels1/30wheels-articleLarge.jpg?quality=75&auto=webp&disable=upscale"},
     { name : "Car 2", src : "https://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/8/2021/11/Aston_Martin_DBX_-_Onyx_Black_-_AML_1__3-JPG-600x400.jpg"},
@@ -25,4 +42,4 @@ const ImageSlider = () => {
   )
 }
 
-export default ImageSlider;
+export default ImageSwiper;
