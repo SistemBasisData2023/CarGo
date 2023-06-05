@@ -5,10 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#00040f",
-        secondary: "#00f6ff",
+        primary: "#2B2D31",
+        secondary: "#1E1F22",
         dimWhite: "rgba(255, 255, 255, 0.7)",
         dimBlue: "rgba(9, 151, 124, 0.1)",
+        textblue: "#F1F7F9",
+        buttonblue: "#318DC1"
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
@@ -23,5 +25,5 @@ export default {
       xl: "1700px",
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
