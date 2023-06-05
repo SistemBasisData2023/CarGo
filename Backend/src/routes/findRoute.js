@@ -3,15 +3,15 @@ const router = express.Router();
 
 const findControllers = require('../controllers/findController');
 
-router.get('/findUserById', findControllers.findUserById);
-router.get('/findUserByUsername', findControllers.findUserByUsername);
-router.get('/findUserByEmail', findControllers.findUserByEmail);
+router.post('/findUserById', findControllers.findUserById);
+router.post('/findUserByUsername', findControllers.findUserByUsername);
+router.post('/findUserByEmail', findControllers.findUserByEmail);
 
-router.get('/findMobilById', findControllers.findMobilById);
-router.get('/findMobilByName', findControllers.findMobilByName);
+router.post('/findMobilById', findControllers.findMobilById);
+router.post('/findMobilByName', findControllers.findMobilByName);
 
-router.get('/findOrderByOrderId', findControllers.findOrderByOrderId);
-router.get('/findOrderByUserId', findControllers.findOrderByUserId);
-router.get('/findOrderByMobilId', findControllers.findOrderByMobilId);
+router.post('/findOrderByOrderId', findControllers.findOrderByOrderId);
+router.post('/findOrderByUserId', findControllers.findOrderByUserId);
+router.post('/findOrderByMobilId', findControllers.findOrderByMobilId);
 
 module.exports = router;

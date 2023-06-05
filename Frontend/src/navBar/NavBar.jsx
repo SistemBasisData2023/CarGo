@@ -12,7 +12,7 @@ const NavBar = () => {
         <a className="btn btn-ghost normal-case text-xl">
           <div>
             <img src={mainLogo} alt="Cargo" className='w-10' />
-          </div>
+          </div> 
           <Link to="/" className=' text-textblue'>
             CarGo
           </Link>
@@ -63,7 +63,7 @@ const NavBar = () => {
                 </ul>
               </div>
             ) : (
-              <Link to='/signIn' className='px-4 py-2 bg-buttonblue m-2 rounded-lg hover:text-gray-700 hover:bg-slate-300'>Sign In</Link>
+              <Link to='/signIn' className='px-4 py-2 bg-buttonblue m-2 rounded-lg hover:bg-slate-300 duration-500 text-primary'>Sign In</Link>
             )
           }
         </div>
