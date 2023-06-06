@@ -24,3 +24,19 @@
   background: #efefef;
   text-align: center;
 }
+
+
+.border-animations {
+  @apply relative text-center w-36 tracking-[1px]
+  hover:text-white pb-1 border-b text-[14px] font-thin
+}
+
+.border-animations::after {
+  @apply content-[''] bg-gray-100 h-[0.1px] w-[0%]
+  left-[50%] -bottom-[0.1px] rounded-xl absolute duration-[400ms]
+  translate-x-[-50%]
+}
+
+.border-animations:hover::after {
+  @apply w-[100%]
+}

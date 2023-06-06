@@ -31,7 +31,7 @@ app.use(session({
   saveUninitialized: true,
   resave: false,
   cookie: {
-    httpOnly: true,
+    httpOnly: false,
     maxAge: parseInt(process.env.SESSION_MAX_AGE),
   }
 }));
