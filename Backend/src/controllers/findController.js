@@ -29,7 +29,7 @@ async function findUserByEmail(req, res) {
 
 async function findMobilById(req, res) {
     try {
-        const result = await findServices.findMobilById(req.body);
+        const result = await findServices.findMobilById(req.params.id);
         res.status(200).json(result);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -72,8 +72,17 @@ async function findOrderByMobilId(req, res) {
     }
 }
 
+async function findMobilByType(req, res) {
+    try {
+        const result = await findServices.findMobilByType(req.query.type);
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+}
+
 module.exports = { findUserById, findUserByUsername, findUserByEmail 
-                , findMobilById, findMobilByName,
+                , findMobilById, findMobilByName, findMobilByType,
                 findOrderByOrderId, findOrderByUserId, findOrderByMobilId};
 
 

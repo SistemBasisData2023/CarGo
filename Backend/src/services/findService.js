@@ -44,11 +44,10 @@ async function findUserByEmail(email_){
 }
 
 // Find mobil
-async function findMobilById(id_){
-    const {id} = id_;
+async function findMobilById(id){
     const query = 'SELECT * FROM mobil WHERE id_mobil = $1';
     const values = [id];
-    const result = db.query(query, values);
+    const result = await db.query(query, values);
     if(result.rows.length > 0){
         return result.rows;
     }else{
@@ -71,6 +70,20 @@ async function findMobilByName(name_){
         }
     }
 }
+
+async function findMobilByType(type){
+    const query = 'SELECT * FROM mobil WHERE type = $1';
+    const values = [type];
+    const result = await db.query(query, values);
+    if(result.rows.length > 0){
+        return result.rows;
+    }else{
+        return {
+            message: `Mobil with type ${type} not found`
+        }
+    }
+}
+
 
 // Find order
 async function findOrderByOrderId(id_){
@@ -116,5 +129,5 @@ async function findOrderByMobilId(id_){
 }
 
 module.exports = { findUserById, findUserByUsername, findUserByEmail
-                , findMobilById, findMobilByName,
+                , findMobilById, findMobilByName, findMobilByType,
                 findOrderByOrderId, findOrderByUserId, findOrderByMobilId};
