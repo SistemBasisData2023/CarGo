@@ -4,21 +4,17 @@ import NavBar from "./navBar/NavBar";
 import Vehicles from "./vehicles/Vehicles";
 import About from "./about/About";
 import Description from "./description/Description";
+import AnimatedRoutes from "./AnimatedRoutes";
 
 const App = () => {
   return (
-    <div>
+    <div className="bg-primary">
       <div>
         <div>
           <NavBar />
         </div>
         <div>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/vehicles" element={<Vehicles />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/description/:id" element={<Description />} />
-          </Routes>
+          <AnimatedRoutes />
         </div>
       </div>
     </div>

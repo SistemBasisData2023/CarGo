@@ -14,6 +14,7 @@ router.get('/getAllMobil', mainControllers.getAllMobil);
 router.delete('/deleteOneMobil', mainControllers.deleteOneMobil);
 router.put('/updateOneMobil', mainControllers.updateOneMobil);
 router.post('/addOneMobil', mainControllers.addOneMobil);
+router.put('/updateMobilImage', mainControllers.updateMobilImage);
 
 // CRUD Orders
 router.get('/getAllOrder', mainControllers.getAllOrder);

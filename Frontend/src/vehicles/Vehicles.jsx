@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { TiShoppingCart } from "react-icons/ti";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const Vehicles = () => {
   const [state, setState] = useState(1);
@@ -9,7 +10,7 @@ const Vehicles = () => {
   const [carType, setCarType] = useState("SUV");
 
   const fetchData = async () => {
-    let api = `http://localhost:3000/findMobilByType?type=${carType}`;
+    let api = `${import.meta.env.VITE_API}/findMobilByType?type=${carType}`;
     try {
       const response = await axios.get(api);
       setCars(response.data);
@@ -23,21 +24,32 @@ const Vehicles = () => {
   }, [carType]);
 
   const formatPrice = (price) => {
-    return parseFloat(price).toFixed(0);
+    const formatter = new Intl.NumberFormat("id-ID", {
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    });
+    const formattedPrice = formatter.format(parseFloat(price).toFixed(0));
+    return "IDR " + formattedPrice + " million";
   };
 
   return (
     <>
-      <>
-        <div className="flex flex-col pt-[6rem] bg-primary items-center h-screen">
+        <motion.div
+          className="flex flex-col pt-[6rem] bg-primary items-center h-screen"
+          initial={{ width: 0 }}
+          animate={{ width: "100%" }}
+          exit={{ x: window.innerWidth, transition: { duration: import.meta.env.VITE_ANIMATION_DURATION } }}
+        >
           <NavButtons
             state={state}
             setState={setState}
             setCarType={setCarType}
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {cars.length === 0 ? (
-              <h1>No Cars Found</h1>
+              <h1 className="col-span-6 text-center text-white">
+                No Cars Found
+              </h1>
             ) : (
               cars.map((car) => (
                 <VehicleCard
@@ -51,8 +63,7 @@ const Vehicles = () => {
               ))
             )}
           </div>
-        </div>
-      </>
+        </motion.div>
     </>
   );
 };
@@ -135,32 +146,31 @@ const VehicleCard = (props) => {
   return (
     <>
       <Link to={`/description/${props.id}`}>
-        <div className="card w-60 shadow-xl m-2 my-4 text-sm cursor-pointer rounded-md bg-[#F1F7F9] overflow-hidden transition-all duration-300 hover:underline">
+        <div className="card w-80 shadow-xl m-2 my-4 text-sm cursor-pointer rounded-md bg-[#F1F7F9] overflow-hidden transition-all duration-300 hover:underline">
           <div className="relative">
-            <div className="image-container transition-opacity duration-300">
+            <div className="transition-opacity duration-300 image-container">
               <img
                 src={`${props.image_url}`}
                 alt="CarGo©"
-                className="w-full h-full"
+                className="object-cover w-full h-40"
               />
             </div>
-            <div className="overlay absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-300 hover:opacity-100 hover:bg-black hover:bg-opacity-50">
+            <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 opacity-0 overlay hover:opacity-100 hover:bg-black hover:bg-opacity-50">
               <TiShoppingCart className="text-[#F1F7F9] text-4xl" />
             </div>
           </div>
-          <div className="card-body p-0 gap-0 mx-4 my-2">
+          <div className="gap-0 p-0 mx-4 my-2 card-body">
             <h2 className="card-title text-[16px] ">
               {props.year + " " + props.name}
             </h2>
             <p>
               {"Starting from "}
-              <span className="font-bold">
-                {"IDR " + props.price + " million"}
-              </span>
+              <span className="font-bold">{props.price}</span>
             </p>
             <p>
               <span className="font-bold">{props.mpg}</span>
-              {" Est. KPL"}
+              {" Est. "}
+              <span className="font-semibold">{"MPG*"}</span>
             </p>
           </div>
         </div>
