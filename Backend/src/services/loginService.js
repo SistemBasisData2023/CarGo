@@ -8,7 +8,8 @@ async function login (user, session){
     const result = await db.query(query, values);
     if(result.rows.length === 0){
         return {
-            message: 'User not found'
+            message: 'User not found',
+            user: null
         }
     }else{
         const user = result.rows[0];
@@ -18,31 +19,35 @@ async function login (user, session){
             session.authorized = true; 
             return {
                 message: 'Login successful',
-                user
+                user: user
             }
         }else{
             return {
-                message: 'Password is not correct'
+                message: 'Password is not correct',
+                user: null
             }
         }
     }
 }
 
 async function register (user, session){
-    const {username, password, email, phone_no} = user;
+    const {username, password, email, phone_no, name, birth_date, address} = user;
     const pass = await bcrypt.hash(password, 10);
-    const query = `INSERT INTO users (username, password, email, phone_no) VALUES ($1, $2, $3, $4) RETURNING *`;
-    const values = [username, pass, email, phone_no];
+    const query = `INSERT INTO users (username, password, email, phone_no, name, birth_date, address) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
+    const values = [username, pass, email, phone_no, name, birth_date, address];
     const result = await db.query(query, values);
     if(result.rowCount === 1){
-        session.user = result.rows[0];
+        user = result.rows[0];
+        session.user = user;
         session.authorized = true;
         return {
-            message: 'Register successful'
+            message: 'Register successful',
+            user: user
         }
     }else{
         return{
-            message: 'Failed to register'
+            message: 'Failed to register',
+            user: null
         } 
     }
 }

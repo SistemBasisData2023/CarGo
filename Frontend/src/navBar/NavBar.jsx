@@ -1,22 +1,23 @@
 import mainLogo from '/cargo.svg';
 import userProfile from '/user.svg';
-import { Link } from 'react-router-dom';
-import Profile from './Profile';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
 
 const NavBar = () => {
-  // Profile.authorized = true;
+  const navigate = useNavigate();
 
   return (
     <div className="navbar bg-secondary fixed top-0 z-[999]">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">
-          <div>
-            <img src={mainLogo} alt="Cargo" className='w-10' />
-          </div> 
-          <Link to="/" className=' text-textblue'>
-            CarGo
-          </Link>
-        </a>
+        <Link to="/" className=' text-textblue'>
+          <div className="btn btn-ghost normal-case text-xl">
+            <div>
+              <img src={mainLogo} alt="Cargo" className='w-10' />
+            </div> 
+              CarGo
+          </div>
+        </Link>
       </div>
       <ul>
         <li className='text-xl text-textblue'>
@@ -44,7 +45,7 @@ const NavBar = () => {
         </div>
         <div>
           {
-            Profile.authorized ? (
+              localStorage.getItem('id_user') ? (
               <div className="dropdown dropdown-end pr-4">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 rounded-full">
@@ -52,14 +53,9 @@ const NavBar = () => {
                   </div>
                 </label>
                 <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                  <li>
-                    <a className="justify-between">
-                      Profile
-                      <span className="badge">New</span>
-                    </a>
-                  </li>
-                  <li><a>Settings</a></li>
-                  <li><a>Logout</a></li>
+                  <li><div>{localStorage.getItem("username")}</div></li>
+                  <li><Link to='/profile'><div className="justify-between">Profile</div></Link></li>
+                  <li><div onClick={() => {axios.get('http://localhost:3000/logout'); localStorage.removeItem('id_user'); navigate(0);}}>Logout</div></li>
                 </ul>
               </div>
             ) : (

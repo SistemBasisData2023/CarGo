@@ -24,3 +24,17 @@
   background: #efefef;
   text-align: center;
 }
+
+.each-slide {
+  display: flex;
+  height: 150px;
+}
+
+.each-slide>div {
+  width: 75%;
+}
+
+.each-slide>div img {
+  height: 150px;
+  object-fit: cover;
+}

@@ -27,6 +27,7 @@ async function register(req, res) {
         const result = await loginServices.register(req.body, req.session);
         res.status(200).json(result);
     } catch (err) {
+        console.log(err)
         if(err.code == "23514"){
             let col = err.constraint.split("_")[1];
             let errMessage = "User " + col + " cannot be empty";
