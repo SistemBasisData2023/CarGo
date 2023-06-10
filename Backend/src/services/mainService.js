@@ -123,6 +123,22 @@ async function addOneMobil(mobil){
     }
 }
 
+async function updateMobilImage(mobil){
+    const { id, image_url } = mobil;
+    const query = 'UPDATE mobil SET image_url = $2 WHERE id_mobil = $1';
+    const values = [id, image_url];
+    const result = await db.query(query, values);
+    if(result.rowCount > 0){
+        return {
+            message: 'Mobil image updated successfully'
+        }
+    }else{
+        return {
+            message: 'No mobil found'
+        }
+    }
+}
+
 async function getAllOrder(){
     const query = "SELECT * FROM orders";
     const result = await db.query(query);
@@ -184,5 +200,5 @@ async function addOneOrder(order){
 }
 
 module.exports = { getAllUser, deleteOneUser, updateOneUser, addOneUser 
-                , getAllMobil, deleteOneMobil, updateOneMobil, addOneMobil,
+                , getAllMobil, deleteOneMobil, updateOneMobil, addOneMobil, updateMobilImage,
                 getAllOrder, deleteOneOrder, updateOneOrder, addOneOrder};

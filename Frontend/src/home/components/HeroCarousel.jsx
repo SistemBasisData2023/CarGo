@@ -1,3 +1,10 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, EffectCards, Autoplay } from 'swiper';
+
+import 'swiper/css'; // core Swiper
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-cube';
 
 import heroCar1 from "/car1-removebg-preview.jpg"
 import heroCar2 from "/car2-removebg-preview.jpg"
@@ -16,18 +23,29 @@ const HeroCarousel = () => {
   ]
 
   return (
-    <div id="hero-car-images" className="slide-container">
-      <div className="w-64 carousel mx-16">
+    <div className="slide-container w-64 mx-auto">
+      <Swiper 
+        effect={ 'cards' } 
+        grabCursor={true} 
+        centeredSlides={true} 
+        slidesPerView={ 'auto' }
+        loop={true}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        modules={[Autoplay, EffectCards, Pagination]}
+        className="swiper"
+      >
         {
-          heroImages.map(image => {
-            return (
-              <div key={image.name} className="carousel-item w-fit">
-                <img src={image.src} className="w-fit"></img>
-              </div>
-            )
-          })
+          heroImages.map((card) => (
+            <SwiperSlide key={card.name} className='w-64'>
+              <img src={card.src} alt={card.name} className='object-cover h-full w-full'/>
+            </SwiperSlide>
+          )) 
         }
-      </div>
+      </Swiper>
     </div>
   )
 }

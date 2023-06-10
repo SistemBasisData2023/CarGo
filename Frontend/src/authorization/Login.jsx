@@ -3,78 +3,81 @@ import TextInput from "./components/TextInput";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 import axios from "axios";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
-import mainLogo from '/cargo.svg';
-
+import mainLogo from "/cargo.svg";
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [cookies, setCookie] = useCookies();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(success){
-      navigate('/');
+    if (success) {
+      navigate("/");
     }
   }, [success, navigate]);
 
   async function handleSubmit(e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const user = {
       username: username,
-      password: password
-    }
-;
+      password: password,
+    };
+    try {
+      const resp = await axios.post("http://localhost:3000/login", user);
+      console.log(resp);
 
-    try{
-        const resp = await axios.post('http://localhost:3000/login', user);
-        console.log(resp);
+      if (resp.data.user) {
+        toast.success(resp.data.message, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
 
-        if(resp.data.user){
-          toast.success(resp.data.message, {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+        setSuccess(true);
 
-          setSuccess(true);
+        setCookie("id_user", resp.data.user.id_user, {
+          path: "/",
+          maxAge: 3600 * 24,
+        });
+        setCookie("username", resp.data.user.username, {
+          path: "/",
+          maxAge: 3600 * 24,
+        });
 
-          setCookie('id_user', resp.data.user.id_user, { path: '/' , maxAge: 3600 * 24 });
-          setCookie('username', resp.data.user.username, { path: '/', maxAge: 3600 * 24 });
+        localStorage.setItem("id_user", resp.data.user.id_user);
+        localStorage.setItem("username", resp.data.user.username);
+      } else {
+        toast.error(resp.data.message, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
 
-          localStorage.setItem('id_user', resp.data.user.id_user);
-          localStorage.setItem('username', resp.data.user.username);
-
-        }else{
-          toast.error(resp.data.message, {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-
-          setSuccess(false);
-        }
-    }catch(err){
+        setSuccess(false);
+      }
+    } catch (err) {
       console.log(err);
       toast.error(err.response.data.message, {
         position: "bottom-center",
@@ -92,39 +95,69 @@ const Login = () => {
   }
 
   return (
-    <div className="flex items-center justify-center bg-primary h-screen">
+    <motion.div
+      className="flex items-center justify-center bg-primary h-screen"
+      initial={{ width: 0 }}
+      animate={{ width: "100%" }}
+      exit={{
+        x: window.innerWidth,
+        transition: { duration: import.meta.env.VITE_ANIMATION_DURATION },
+      }}
+    >
       <div className="bg-secondary px-10 py-10 w-fit text-center relative mt-16">
         <a className="inline-flex flex-shrink-0 items-center justify-center text-center normal-case text-xl">
           <div>
-            <img src={ mainLogo } alt="Cargo" className='w-10' />
+            <img src={mainLogo} alt="Cargo" className="w-10" />
           </div>
-          <div className="px-2 font-bold text-textblue">
-            CarGo
-          </div>
+          <div className="px-2 font-bold text-textblue">CarGo</div>
         </a>
-        <p>
-          Welcome to CarGo!
-        </p>
-        <p>
-          Please sign in to continue
-        </p>
+        <p className="text-gray-300">Welcome to CarGo!</p>
+        <p className="text-gray-300">Please sign in to continue</p>
         <form onSubmit={handleSubmit}>
-          <TextInput required={true} type="text" label="Username" handle={event => setUsername(event.target.value)} value={username} placeholder="Enter username here" />
-          <TextInput required={true} type={passwordShown ? "text" : "password"} label="Password" handle={event => setPassword(event.target.value)} value={password} placeholder="Your password here" />
+          <TextInput
+            required={true}
+            type="text"
+            label={<span className="text-gray-500">Username</span>}
+            handle={(event) => setUsername(event.target.value)}
+            value={username}
+            placeholder="Enter username here"
+          />
+          <div className="h-2"></div>
+          <TextInput
+            required={true}
+            type={passwordShown ? "text" : "password"}
+            label={<span className="text-gray-500">Password</span>}
+            handle={(event) => setPassword(event.target.value)}
+            value={password}
+            placeholder="Your password here"
+          />
           <div className="inline-flex flex-shrink-0 items-center justify-center text-center normal-case text-xl">
-            <input type="checkbox" checked={passwordShown} className="checkbox checkbox-primary m-4" onChange={() => setPasswordShown(!passwordShown)} />
-            <span className="text-sm">Show Password</span>
+            <input
+              type="checkbox"
+              checked={passwordShown}
+              className="checkbox checkbox-primary m-4 outline-none"
+              onChange={() => setPasswordShown(!passwordShown)}
+            />
+            <span className="text-sm text-gray-300">Show Password</span>
           </div>
           <div>
-            <button type="submit" className=" bg-buttonblue px-2 py-1 rounded-xl mx-auto text-primary hover:bg-slate-300 duration-500">Sign In</button>
+            <button
+              type="submit"
+              className="bg-buttonblue px-4 py-2 rounded-md mx-auto text-gray-300 hover:bg-primary hover:text-gray-600 outline-none border-none"
+            >
+              Sign In
+            </button>
             <ToastContainer />
-            <p className="pt-2">Don&apos;t have an account?</p>
-            <Link to="/signUp" className="text-indigo-600 font-bold"> Register here! </Link>
+            <p className="pt-2 text-gray-300">Don&apos;t have an account?</p>
+            <Link to="/register" className="text-buttonblue font-bold">
+              {" "}
+              Register here!{" "}
+            </Link>
           </div>
         </form>
       </div>
-    </div>
-  )
-}
+    </motion.div>
+  );
+};
 
 export default Login;

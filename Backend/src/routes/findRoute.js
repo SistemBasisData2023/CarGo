@@ -7,8 +7,9 @@ router.get('/findUserById', findControllers.findUserById);
 router.get('/findUserByUsername', findControllers.findUserByUsername);
 router.get('/findUserByEmail', findControllers.findUserByEmail);
 
-router.get('/findMobilById', findControllers.findMobilById);
+router.get('/findMobilById/:id', findControllers.findMobilById);
 router.get('/findMobilByName', findControllers.findMobilByName);
+router.get('/findMobilByType', findControllers.findMobilByType);
 
 router.get('/findOrderByOrderId', findControllers.findOrderByOrderId);
 router.get('/findOrderByUserId', findControllers.findOrderByUserId);
