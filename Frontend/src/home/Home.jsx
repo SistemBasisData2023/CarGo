@@ -120,10 +120,10 @@ const Home = () => {
         </div>
       </div>
       <div id="third-section">
-        <h1 className="text-4xl text-center my-8 text-textblue">
-          POPULAR VEHICLES
+        <h1 className="text-4xl text-center my-8 text-textblue font-bold tracking-wide mx-auto w-fit shadow-xl">
+          AVAILABLE CARS
         </h1>
-        <div className="my-8">
+        <div className="my-8 items-center justify-center">
           <CardsScroller />
         </div>
         <div className="items-center justify-center text-center">
