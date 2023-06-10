@@ -60,10 +60,10 @@ const About = () => {
                 </div> */}
               </div>
               <div className="flex justify-center mt-16">
-                <button className="flex justify-center bg-buttonblue rounded-md text-white w-40 h-10">
+                <button className="flex justify-center bg-buttonblue rounded-md text-white w-40 h-10 mx-4">
                   <p className="my-auto">Add Dealer</p>
                 </button>
-                <button className="flex justify-center bg-buttonblue rounded-md text-white w-40 h-10">
+                <button className="flex justify-center bg-buttonblue rounded-md text-white w-40 h-10 mx-4">
                   <p className="my-auto">Add Cars</p>
                 </button>
               </div>
@@ -117,7 +117,7 @@ const OrderCard = () => {
           </h1>
         </div>
         <div className="flex justify-end">
-          <button className="flex justify-center bg-gray-200 rounded-md text-black w-36 h-10 mr-4 hover:brightness-90 transition-all duration-300">
+          <button className="flex justify-center bg-red-400 rounded-md text-black w-36 h-10 mr-4 hover:brightness-90 transition-all duration-300">
             <MdCancelPresentation className="my-auto mr-2" />
             <p className="my-auto">Deny Order</p>
           </button>
