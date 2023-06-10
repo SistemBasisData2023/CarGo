@@ -1,16 +1,23 @@
 import TextInput from "./components/TextInput";
+
 import { useEffect, useState } from "react";
-import mainLogo from '/cargo.svg';
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from 'react-toastify';
+
+import axios from "axios";
+
 import 'react-toastify/dist/ReactToastify.css';
+
+import mainLogo from '/cargo.svg';
+
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [success, setSuccess] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [cookies, setCookie] = useCookies();
 
   const navigate = useNavigate();
 
@@ -46,6 +53,9 @@ const Login = () => {
           });
 
           setSuccess(true);
+
+          setCookie('id_user', resp.data.user.id_user, { path: '/' , maxAge: 3600 * 24 });
+          setCookie('username', resp.data.user.username, { path: '/', maxAge: 3600 * 24 });
 
           localStorage.setItem('id_user', resp.data.user.id_user);
           localStorage.setItem('username', resp.data.user.username);

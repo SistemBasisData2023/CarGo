@@ -1,12 +1,18 @@
 import TextInput from "./components/TextInput";
+
 import { useEffect, useState } from "react";
-import mainLogo from '/cargo.svg';
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useCookies } from "react-cookie";
+
+import axios from "axios";
 import DatePicker from 'react-datepicker';
+
+import mainLogo from '/cargo.svg';
+
+import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
+
 
 const Register = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -18,6 +24,7 @@ const Register = () => {
   const [name, setName] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [address, setAddress] = useState('');
+  const [cookies, setCookie] = useCookies();
 
   const navigate = useNavigate();
 
@@ -57,6 +64,9 @@ const Register = () => {
         });
 
         setSuccess(true);
+
+        setCookie('id_user', resp.data.user.id_user, { path: '/' });
+        setCookie('username', resp.data.user.username, { path: '/' });
 
         localStorage.setItem('id_user', resp.data.user.id_user);
         localStorage.setItem('username', resp.data.user.username);
