@@ -6,6 +6,8 @@ import Vehicles from "./vehicles/Vehicles";
 import About from "./about/About";
 import Description from "./description/Description";
 import User from "./users/User";
+import Login from "./authorization/Login";
+import Register from "./authorization/Register";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -16,7 +18,9 @@ const AnimatedRoutes = () => {
         <Route path="/vehicles" element={<Vehicles />} />
         <Route path="/about" element={<About />} />
         <Route path="/description/:id" element={<Description />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/orders" element={<User />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </AnimatePresence>
   );

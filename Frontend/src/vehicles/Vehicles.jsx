@@ -168,7 +168,7 @@ const SearchBar = () => {
           placeholder="Search Car Name"
           className="text-black bg-gray-100 rounded-2xl p-4 select-none outline-none min-w-[80%] focus:placeholder-transparent"
         ></input>
-        <button className="min-w-[12%] mx-2 bg-buttonblue text-gray-100 rounded-2xl transition-colors duration-300 hover:bg-[#8BB7CF]">
+        <button className="min-w-[12%] mx-2 bg-buttonblue text-gray-100 rounded-2xl hover:brightness-75 transition-all duration-300">
           Search
         </button>
       </div>
