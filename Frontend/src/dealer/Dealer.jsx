@@ -28,7 +28,7 @@ const car = {
     "https://media.rivian.com/rivian-main/image/upload/f_auto,q_auto/v1/rivian-com/r1t/Hero_-_Desktop_mpjmqe",
 };
 
-const About = () => {
+const Dealer = () => {
   return (
     <>
       <motion.div
@@ -94,7 +94,7 @@ const About = () => {
   );
 };
 
-export default About;
+export default Dealer;
 
 const OrderCard = () => {
   return (
