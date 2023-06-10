@@ -4,17 +4,17 @@ import { FaCalendarDay, FaMapMarkerAlt, FaEdit } from "react-icons/fa";
 import { MdOutlinePayment, MdCancelPresentation } from "react-icons/md";
 
 const example = {
-  name: "Eriqo123",
-  email: "eriqo@gmail.com",
-  phone_no: "081234567890",
-  full_name: "Eriqo Arief Wicaksono",
-  birth_date: "01-01-2000",
-  address: "Komplek Grand Pesona Depok Blok A No. 1",
+    name: "kena",
+    email: "kresnarmdn@gmail.com",
+    phone_no: "08123696969",
+    full_name: "Kena Ramdani",
 };
+
 const order = {
   quantity: "1",
   total_price: "660.000.000",
 };
+
 const car = {
   name: "CarGo© R1T",
   year: 2022,
@@ -54,26 +54,17 @@ const About = () => {
               <h2 className="my-1 text-white text-center text-sm">
                 {example.name}
               </h2>
-              <div className="flex text-white mt-4">
-                <FaCalendarDay className="text-white text-2xl mx-auto mr-2" />
-                <h2 className="font-bold text-center mx-auto ml-1 text-xl">
-                  {example.birth_date}
-                </h2>
-              </div>
               <div className="flex text-white mt-4 justify-center">
                 {/* <div className="flex justify-start">
                   <FaMapMarkerAlt className="text-white text-2xl ml-8" />
                 </div> */}
-                <div className="h-15">
-                  <h2 className="flex font-bold text-center text-xl">
-                    <span><FaMapMarkerAlt className="text-white text-2xl pr-2" /></span>{example.address}
-                  </h2>
-                </div>
               </div>
               <div className="flex justify-center mt-16">
                 <button className="flex justify-center bg-buttonblue rounded-md text-white w-40 h-10">
-                  <FaEdit className="text-white my-auto mr-2" />
-                  <p className="my-auto">Edit Profile</p>
+                  <p className="my-auto">Add Dealer</p>
+                </button>
+                <button className="flex justify-center bg-buttonblue rounded-md text-white w-40 h-10">
+                  <p className="my-auto">Add Cars</p>
                 </button>
               </div>
             </div>
@@ -82,7 +73,7 @@ const About = () => {
           <div className="grid h-[100%] col-span-6 bg-[#232528]">
             <div className="h-[100%] mx-8">
               <h1 className="text-white text-xl font-semibold mt-8">
-                ORDER HISTORY
+                INCOMING ORDER
               </h1>
 
               <OrderCard />
@@ -128,11 +119,11 @@ const OrderCard = () => {
         <div className="flex justify-end">
           <button className="flex justify-center bg-gray-200 rounded-md text-black w-36 h-10 mr-4 hover:brightness-90 transition-all duration-300">
             <MdCancelPresentation className="my-auto mr-2" />
-            <p className="my-auto">Cancel Order</p>
+            <p className="my-auto">Deny Order</p>
           </button>
           <button className="flex justify-center bg-buttonblue rounded-md text-white w-36 h-10 mr-4 hover:brightness-90 transition-all duration-300">
             <MdOutlinePayment className="my-auto mr-2" />
-            <p className="my-auto">Pay Now</p>
+            <p className="my-auto">Accept Order</p>
           </button>
         </div>
       </div>

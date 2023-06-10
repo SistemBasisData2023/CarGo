@@ -4,12 +4,10 @@ import { FaCalendarDay, FaMapMarkerAlt, FaEdit } from "react-icons/fa";
 import { MdOutlinePayment, MdCancelPresentation } from "react-icons/md";
 
 const example = {
-  name: "Eriqo123",
-  email: "eriqo@gmail.com",
-  phone_no: "081234567890",
+  name: "kena",
+  email: "kresnarmdn@gmail.com",
+  phone_no: "08123696969",
   full_name: "Eriqo Arief Wicaksono",
-  birth_date: "01-01-2000",
-  address: "Komplek Grand Pesona Depok Blok A No. 1",
 };
 const order = {
   quantity: "1",
@@ -73,7 +71,11 @@ const Dealer = () => {
               <div className="flex justify-center mt-16">
                 <button className="flex justify-center bg-buttonblue rounded-md text-white w-40 h-10">
                   <FaEdit className="text-white my-auto mr-2" />
-                  <p className="my-auto">Edit Profile</p>
+                  <p className="my-auto">Add Dealer</p>
+                </button>
+                <button className="flex justify-center bg-buttonblue rounded-md text-white w-40 h-10">
+                  <FaEdit className="text-white my-auto mr-2" />
+                  <p className="my-auto">Add Cars</p>
                 </button>
               </div>
             </div>
