@@ -1,11 +1,25 @@
+import { Link, useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+
+import axios from 'axios';
+
 import mainLogo from '/cargo.svg';
 import userProfile from '/user.svg';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 const NavBar = () => {
   const navigate = useNavigate();
+
+  const [cookies, removeCookie] = useCookies();
+
+  const handleLogout = () => {
+    axios.get('http://localhost:3000/logout'); 
+    removeCookie('id_user', { path: '/' });
+    removeCookie('username', { path: '/' });
+    localStorage.clear();
+    navigate(0);
+  }
 
   return (
     <div className="navbar bg-secondary fixed top-0 z-[999]">
@@ -45,6 +59,7 @@ const NavBar = () => {
         </div>
         <div>
           {
+              // cookies.id_user
               localStorage.getItem('id_user') ? (
               <div className="dropdown dropdown-end pr-4">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -55,7 +70,7 @@ const NavBar = () => {
                 <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                   <li><div>{localStorage.getItem("username")}</div></li>
                   <li><Link to='/profile'><div className="justify-between">Profile</div></Link></li>
-                  <li><div onClick={() => {axios.get('http://localhost:3000/logout'); localStorage.removeItem('id_user'); navigate(0);}}>Logout</div></li>
+                  <li><div onClick={handleLogout}>Logout</div></li>
                 </ul>
               </div>
             ) : (
