@@ -1,16 +1,22 @@
 import { Link } from "react-router-dom";
 import { TiShoppingCart } from "react-icons/ti";
+import { AiOutlineSearch } from "react-icons/ai";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
 const Vehicles = () => {
-  const [state, setState] = useState(1);
+  const [state, setState] = useState(0);
   const [cars, setCars] = useState([]);
-  const [carType, setCarType] = useState("SUV");
+  const [carType, setCarType] = useState("All");
 
   const fetchData = async () => {
-    let api = `${import.meta.env.VITE_API}/findMobilByType?type=${carType}`;
+    let api;
+    if (carType === "All") {
+      api = `${import.meta.env.VITE_API}/getAllMobil`;
+    } else {
+      api = `${import.meta.env.VITE_API}/findMobilByType?type=${carType}`;
+    }
     try {
       const response = await axios.get(api);
       setCars(response.data);
@@ -34,36 +40,34 @@ const Vehicles = () => {
 
   return (
     <>
-        <motion.div
-          className="flex flex-col pt-[6rem] bg-primary items-center h-screen"
-          initial={{ width: 0 }}
-          animate={{ width: "100%" }}
-          exit={{ x: window.innerWidth, transition: { duration: import.meta.env.VITE_ANIMATION_DURATION } }}
-        >
-          <NavButtons
-            state={state}
-            setState={setState}
-            setCarType={setCarType}
-          />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {cars.length === 0 ? (
-              <h1 className="col-span-6 text-center text-white">
-                No Cars Found
-              </h1>
-            ) : (
-              cars.map((car) => (
-                <VehicleCard
-                  id={`${car.id_mobil}`}
-                  name={`${car.name}`}
-                  year={`${car.year}`}
-                  price={`${formatPrice(car.price)}`}
-                  mpg={`${car.mpg}`}
-                  image_url={`${car.image_url}`}
-                />
-              ))
-            )}
-          </div>
-        </motion.div>
+      <motion.div
+        className="flex flex-col pt-[6rem] bg-primary items-center min-h-screen"
+        initial={{ width: 0 }}
+        animate={{ width: "100%" }}
+        exit={{
+          x: window.innerWidth,
+          transition: { duration: import.meta.env.VITE_ANIMATION_DURATION },
+        }}
+      >
+        <NavButtons state={state} setState={setState} setCarType={setCarType} />
+        {carType === "All" ? <SearchBar /> : <></>}
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {cars.length === 0 ? (
+            <h1 className="col-span-6 text-center text-white">No Cars Found</h1>
+          ) : (
+            cars.map((car) => (
+              <VehicleCard
+                id={`${car.id_mobil}`}
+                name={`${car.name}`}
+                year={`${car.year}`}
+                price={`${formatPrice(car.price)}`}
+                mpg={`${car.mpg}`}
+                image_url={`${car.image_url}`}
+              />
+            ))
+          )}
+        </div>
+      </motion.div>
     </>
   );
 };
@@ -72,6 +76,19 @@ const NavButtons = ({ state, setState, setCarType }) => {
   return (
     <>
       <div className="flex items-center pb-8">
+        <button
+          onClick={() => {
+            setState(0);
+            setCarType("All");
+          }}
+          className={`${
+            state == 0
+              ? "border-animations text-white border-white"
+              : "border-animations text-gray-500 border-gray-500"
+          }`}
+        >
+          All
+        </button>
         <button
           onClick={() => {
             setState(1);
@@ -142,6 +159,23 @@ const NavButtons = ({ state, setState, setCarType }) => {
   );
 };
 
+const SearchBar = () => {
+  return (
+    <>
+      <div className="flex h-12 w-[50rem] mb-4 text-gray-200">
+        <AiOutlineSearch className="text-2xl my-auto mr-2 min-w-[5%]" />
+        <input
+          placeholder="Search Car Name"
+          className="text-black bg-gray-100 rounded-2xl p-4 select-none outline-none min-w-[80%] focus:placeholder-transparent"
+        ></input>
+        <button className="min-w-[12%] mx-2 bg-buttonblue text-gray-100 rounded-2xl transition-colors duration-300 hover:bg-[#8BB7CF]">
+          Search
+        </button>
+      </div>
+    </>
+  );
+};
+
 const VehicleCard = (props) => {
   return (
     <>
@@ -151,7 +185,7 @@ const VehicleCard = (props) => {
             <div className="transition-opacity duration-300 image-container">
               <img
                 src={`${props.image_url}`}
-                alt="CarGo©"
+                alt={"CarGo© " + props.name}
                 className="object-cover w-full h-40"
               />
             </div>

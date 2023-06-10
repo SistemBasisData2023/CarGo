@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {TiTags} from "react-icons/ti";
+import { TiTags } from "react-icons/ti";
+import { TbReceiptTax } from "react-icons/tb";
 import { motion } from "framer-motion";
 import Order from "../order/Order";
 
@@ -38,7 +39,7 @@ const Description = () => {
       minimumFractionDigits: 0,
     });
     const formattedPrice = formatter.format(number * 1000000);
-    return "IDR " + formattedPrice;
+    return formattedPrice;
   };
 
   return (
@@ -47,7 +48,10 @@ const Description = () => {
         className="items-center h-screen bg-primary"
         initial={{ width: 0 }}
         animate={{ width: "100%" }}
-        exit={{ x: window.innerWidth, transition: { duration: import.meta.env.VITE_ANIMATION_DURATION } }}
+        exit={{
+          x: window.innerWidth,
+          transition: { duration: import.meta.env.VITE_ANIMATION_DURATION },
+        }}
       >
         {cars.length === 0 ? (
           <h1>No Cars Found</h1>
@@ -57,8 +61,9 @@ const Description = () => {
               id={`${car.id_mobil}`}
               name={`${car.name}`}
               year={`${car.year}`}
-              price={`${formatPrice(car.price)}`}
-              priceRupiah={`${formatRupiah(car.price)}`}
+              price={car.price}
+              priceFormatted={`${formatPrice(car.price)}`}
+              priceRupiah={formatRupiah(car.price)}
               mpg={`${car.mpg}`}
               transmission={`${car.transmission}`}
               type={`${car.type}`}
@@ -89,7 +94,7 @@ const MainScreen = (props) => {
               </h2>
               <p className="drop-shadow-lg">
                 {"Starting from "}
-                <span className="font-bold">{props.price}</span>
+                <span className="font-bold">{props.priceFormatted}</span>
               </p>
               <p className="pt-4 drop-shadow-lg">
                 <span className="font-bold">{props.mpg}</span>
@@ -155,11 +160,15 @@ const MainScreen = (props) => {
               <div className="flex items-center">
                 <TiTags className="mb-2 mr-2 text-2xl text-white" />
                 <p className="mb-2 text-2xl font-semibold tracking-tighter text-white font-poppins">
-                  {props.priceRupiah}
+                  IDR {props.priceRupiah}
                 </p>
               </div>
+              <div className="flex gap-1">
+                <TbReceiptTax className="text-white text-end my-auto" />
+                <p className="text-white">including tax</p>
+              </div>
             </div>
-            <Order />
+            <Order car={props} />
           </div>
         </div>
       </div>
