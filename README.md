@@ -22,9 +22,10 @@ This website is a platform that provides buyers to purchase cars. Potential buye
 - Add new cars into the catalogue
 - Review incoming order and could deny or accept the order.
 
-## Entities
+## Entities/Tables
 
 ### 1. ```Car```
+The Mobil table represents the car inventory in the dealership system. It stores information about various car models such as their names, manufacturing years, prices, fuel efficiency (miles per gallon), transmission types, categories, descriptions, and image URLs. This table helps in managing and organizing the available cars for sale. Here are the columns stored by this table:
 1. car_id
 2. name
 3. year
@@ -35,6 +36,7 @@ This website is a platform that provides buyers to purchase cars. Potential buye
 8. description
 
 ### 2. ```User```
+The Users table is responsible for storing user information within the system. It includes details such as usernames, passwords, email addresses, phone numbers, and user roles (whether they are dealers or not). Additionally, it holds user-specific data like names, birth dates, and addresses. This table helps in managing user accounts and their associated information. Here are the columns stored by this table:
 1. user_id
 2. username
 3. password
@@ -47,6 +49,7 @@ This website is a platform that provides buyers to purchase cars. Potential buye
 10. address
 
 ### 3. ```Order```
+The Orders table is used to track the orders placed by users for car purchases. It links the orders to the respective users and car models through foreign key references. The table records information such as the order date, expected shipping date, shipping ZIP code, quantity of cars ordered, total payment amount, amount already paid, and the current payment status. Here are the columns stored by this table:
 1. order_id
 2. user_id
 3. car_id
