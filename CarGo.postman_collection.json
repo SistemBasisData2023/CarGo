@@ -1,0 +1,1002 @@
+{
+	"info": {
+		"_postman_id": "13a9a415-210a-4d7f-81c7-f39176234a37",
+		"name": "CarGo",
+		"description": "Backend API for CarGo database",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24262938"
+	},
+	"item": [
+		{
+			"name": "getAllUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/getAllUser",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"getAllUser"
+					]
+				},
+				"description": "Route to get all registered users. Sends all user data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "Authorize",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/authorize",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"authorize"
+					]
+				},
+				"description": "Route to get all registered users. Sends all user data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "getAllMobil",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/getAllMobil",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"getAllMobil"
+					]
+				},
+				"description": "Route to get all registered mobil. Sends all user data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "getAllOrder",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "localhost:5000/getAllOrder",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"getAllOrder"
+					]
+				},
+				"description": "Route to get all registered orders. Sends all data in json format"
+			},
+			"response": []
+		},
+		{
+			"name": "findUserById",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "7",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/findUserById",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"findUserById"
+					]
+				},
+				"description": "Route to find user by atribute id_user. Sends all data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "findUserByUsername",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "Jua",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/findUserByUsername",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"findUserByUsername"
+					]
+				},
+				"description": "Route to find user by atribute username. Sends all data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "findUserByEmail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "uan",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/findUserByEmail",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"findUserByEmail"
+					]
+				},
+				"description": "Route to find user by atribute email. Sends all data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "findMobilById",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/findMobilById",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"findMobilById"
+					]
+				},
+				"description": "Route to find order by atribute id_order. Sends all data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "findMobilByName",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Corola",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/findMobilByName",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"findMobilByName"
+					]
+				},
+				"description": "Route to find order by atribute name. Sends all data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "findOrderByOrderId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/findOrderByOrderId",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"findOrderByOrderId"
+					]
+				},
+				"description": "Route to find order by atribute id_order. Sends all data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "findOrderByUserId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/findOrderByUserId",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"findOrderByUserId"
+					]
+				},
+				"description": "Route to find order by atribute id_user. Sends all data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "findOrderByMobilId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/findOrderByMobilId",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"findOrderByMobilId"
+					]
+				},
+				"description": "Route to find order by atribute id_order. Sends all data in json format."
+			},
+			"response": []
+		},
+		{
+			"name": "deleteOneUser",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "9",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/deleteOneUser",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"deleteOneUser"
+					]
+				},
+				"description": "Delete one registered user by atribute id_user"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteOneMobil",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/deleteOneMobil",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"deleteOneMobil"
+					]
+				},
+				"description": "Delete one registered user by atribute id_mobil"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteOneOrder",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "18",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/deleteOneOrder",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"deleteOneOrder"
+					]
+				},
+				"description": "Delete one registered user by atribute id_order"
+			},
+			"response": []
+		},
+		{
+			"name": "addOneOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id_user",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "id_mobil",
+							"value": "7",
+							"type": "text"
+						},
+						{
+							"key": "order_date",
+							"value": "2023-10-15",
+							"type": "text"
+						},
+						{
+							"key": "shipping_date",
+							"value": "2023-10-18",
+							"type": "text"
+						},
+						{
+							"key": "zip_code",
+							"value": "10085",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "total_payment",
+							"value": "20000",
+							"type": "text"
+						},
+						{
+							"key": "amount_paid",
+							"value": "5000",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "WAITING PAYMENT",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/addOneOrder",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"addOneOrder"
+					]
+				},
+				"description": "Add one order\n\nRequired : all.\n\nForeign key id_user, id_mobil references to users(id_user), mobil(id_mobil)."
+			},
+			"response": []
+		},
+		{
+			"name": "addOneMobil",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Corola Cross",
+							"type": "text"
+						},
+						{
+							"key": "year",
+							"value": "2015",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "60000000",
+							"type": "text"
+						},
+						{
+							"key": "mpg",
+							"value": "25",
+							"type": "text"
+						},
+						{
+							"key": "transmission",
+							"value": "Hybrid",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "Car",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "One of the most popular hybrid based cars by our brand",
+							"type": "text"
+						},
+						{
+							"key": "image_url",
+							"value": "https://www.toyota.astra.co.id/sites/default/files/2023-02/2-Platinum-White-Pearl---Attitude-Black.png",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/addOneMobil",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"addOneMobil"
+					]
+				},
+				"description": "Add one mobil.\n\nRequired : name, year, price."
+			},
+			"response": []
+		},
+		{
+			"name": "addOneUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "user1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Passw0rd!",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "user1@example.com",
+							"type": "text"
+						},
+						{
+							"key": "phone_no",
+							"value": "1234567890",
+							"type": "text"
+						},
+						{
+							"key": "is_dealer",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "User 1",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "1990-01-01",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Alamat User 1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/addOneUser",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"addOneUser"
+					]
+				},
+				"description": "Add one user.\n\nRequired : username, email, password.\n\nis_dealer defaults to false."
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "juanjonathan68",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123Juan123;'",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "juan.jonathan@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "phone_no",
+							"value": "8162412423",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Juan Jonathan",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "2003-10-21",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Kemayoran, Jakarta Pusat",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"register"
+					]
+				},
+				"description": "Register a user.\n\nRequired : username, password, email.\n\nUsed for customers only (is_dealer is always false and cannot be changed)"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "user2",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Secure@123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				},
+				"description": "Login via username and password"
+			},
+			"response": []
+		},
+		{
+			"name": "updateOneUser",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "user1",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Pass@123",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "user1@example.com",
+							"type": "text"
+						},
+						{
+							"key": "phone_no",
+							"value": "012897412",
+							"type": "text"
+						},
+						{
+							"key": "is_dealer",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "User 1",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "2001-01-01",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Address User 1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/updateOneUser",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"updateOneUser"
+					]
+				},
+				"description": "Update one user found by id_user."
+			},
+			"response": []
+		},
+		{
+			"name": "updateOneMobil",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Corola Cross",
+							"type": "text"
+						},
+						{
+							"key": "year",
+							"value": "2016",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "65000000",
+							"type": "text"
+						},
+						{
+							"key": "mpg",
+							"value": "26",
+							"type": "text"
+						},
+						{
+							"key": "transmission",
+							"value": "Hybrid",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "Car",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "One of the most popular hybrid cars of our brand",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/updateOneMobil",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"updateOneMobil"
+					]
+				},
+				"description": "Update one mobil found by id_mobil."
+			},
+			"response": []
+		},
+		{
+			"name": "updateOneOrder",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id_order",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "id_user",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "id_mobil",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "order_date",
+							"value": "2023-10-23",
+							"type": "text"
+						},
+						{
+							"key": "shipping_date",
+							"value": "2023-10-24",
+							"type": "text"
+						},
+						{
+							"key": "zipcode",
+							"value": "13923",
+							"type": "text"
+						},
+						{
+							"key": "quantity",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "total_payment",
+							"value": "5000000",
+							"type": "text"
+						},
+						{
+							"key": "amount_paid",
+							"value": "2500000",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "WAITING PAYMENT",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/updateOneOrder",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"updateOneOrder"
+					]
+				},
+				"description": "Update one order found by id_order."
+			},
+			"response": []
+		},
+		{
+			"name": "updateOneAmountPaid",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id_order",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "amount_paid",
+							"value": "20000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/updateOneAmountPaid",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"updateOneAmountPaid"
+					]
+				},
+				"description": "Update amount paid on one order by id_order."
+			},
+			"response": []
+		},
+		{
+			"name": "updateOnePaymentStatus",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id_order",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "PAID",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/updateOnePaymentStatus",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"updateOnePaymentStatus"
+					]
+				},
+				"description": "Update payment status of one order by id_order."
+			},
+			"response": []
+		}
+	]
+}
