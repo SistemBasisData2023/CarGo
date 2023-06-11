@@ -38,7 +38,7 @@ async function findMobilById(req, res) {
 
 async function findMobilByName(req, res) {
     try {
-        const result = await findServices.findMobilByName(req.body);
+        const result = await findServices.findMobilByName(req.query);
         res.status(200).json(result);
     } catch (err) {
         res.status(400).json({ message: err.message });

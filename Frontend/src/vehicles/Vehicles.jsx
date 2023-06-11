@@ -9,13 +9,25 @@ const Vehicles = () => {
   const [state, setState] = useState(0);
   const [cars, setCars] = useState([]);
   const [carType, setCarType] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSomething = (event) => {
+    event.preventDefault();
+    fetchData();
+  };
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const fetchData = async () => {
     let api;
-    if (carType === "All") {
-      api = `${import.meta.env.VITE_API}/getAllMobil`;
-    } else {
-      api = `${import.meta.env.VITE_API}/findMobilByType?type=${carType}`;
+    if (carType === "All" && searchTerm === "") {
+      api = `http://localhost:3000/getAllMobil`;
+    } else if (carType === "All" && searchTerm !== "") { 
+      api = `http://localhost:3000/findMobilByName?name=${searchTerm}`;
+    }else {
+      api = `http://localhost:3000/findMobilByType?type=${carType}`;
     }
     try {
       const response = await axios.get(api);
@@ -50,7 +62,7 @@ const Vehicles = () => {
         }}
       >
         <NavButtons state={state} setState={setState} setCarType={setCarType} />
-        {carType === "All" ? <SearchBar /> : <></>}
+        {carType === "All" ? <SearchBar handleChange={handleChange} searchTerm={searchTerm} handleSomething={handleSomething}/> : <></>}
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {cars.length === 0 ? (
             <h1 className="col-span-6 text-center text-white">No Cars Found</h1>
@@ -159,19 +171,26 @@ const NavButtons = ({ state, setState, setCarType }) => {
   );
 };
 
-const SearchBar = () => {
+const SearchBar = ({handleSomething, searchTerm, handleChange}) => {
   return (
     <>
-      <div className="flex h-12 w-[50rem] mb-4 text-gray-200">
-        <AiOutlineSearch className="text-2xl my-auto mr-2 min-w-[5%]" />
-        <input
-          placeholder="Search Car Name"
-          className="text-black bg-gray-100 rounded-2xl p-4 select-none outline-none min-w-[80%] focus:placeholder-transparent"
-        ></input>
-        <button className="min-w-[12%] mx-2 bg-buttonblue text-gray-100 rounded-2xl hover:brightness-75 transition-all duration-300">
-          Search
-        </button>
-      </div>
+      <form onSubmit={handleSomething}>
+        <div className="flex h-12 w-[50rem] mb-4 text-gray-200">
+          <AiOutlineSearch className="text-2xl my-auto mr-2 min-w-[5%]" />
+          <input
+            placeholder="Search Car Name"
+            value={searchTerm}
+            onChange={handleChange}
+            className="text-black bg-gray-100 rounded-2xl p-4 select-none outline-none min-w-[80%] focus:placeholder-transparent"
+          />
+          <button
+            type="submit"
+            className="min-w-[12%] mx-2 bg-buttonblue text-gray-100 rounded-2xl hover:brightness-75 transition-all duration-300"
+          >
+            Search
+          </button>
+        </div>
+      </form>
     </>
   );
 };

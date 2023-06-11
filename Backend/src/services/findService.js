@@ -57,17 +57,15 @@ async function findMobilById(id){
     }
 }
 
-async function findMobilByName(name_){
-    const {name} = name_;
-    const query = 'SELECT * FROM mobil WHERE nama_mobil LIKE $1';
+async function findMobilByName(mobil){
+    const {name} = mobil;
+    const query = 'SELECT * FROM mobil WHERE name ILIKE $1';
     const values = ['%' + name + '%'];
     const result = await db.query(query, values);
     if(result.rows.length > 0){
         return result.rows;
     }else{
-        return {
-            message: 'Mobil not found'
-        }
+        return [];
     }
 }
 

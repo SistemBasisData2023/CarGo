@@ -53,7 +53,7 @@ const CardsScroller = () => {
         {
           cards.map((card) => (
             <SwiperSlide key={card.id_mobil} className='h-60 w-96'>
-              <Link to={`/desciption/${card.id_mobil}`}>
+              <Link to={`/description/${card.id_mobil}`}>
                 <img src={card.image_url} alt={card.id_mobil} className='object-cover h-full w-full'/>
               </Link>
             </SwiperSlide>
