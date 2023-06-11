@@ -5,6 +5,10 @@ import {
   AiOutlineMinus,
   AiOutlineCreditCard,
 } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 const formatRupiah = (number) => {
   const formatter = new Intl.NumberFormat("id-ID", {
@@ -16,8 +20,87 @@ const formatRupiah = (number) => {
 };
 
 const Order = ({ car }) => {
+  const navigate = useNavigate();
+  const currentUserId = localStorage.getItem("id_user");
   const [price, setPrice] = useState(car.price);
   const [quantity, setQuantity] = useState(1);
+  const [zipCode, setZipCode] = useState("");
+  const [amountPaid, setAmountPaid] = useState(0);
+  const [status, setStatus] = useState("PENDING");
+  const [paymentPlan, setPaymentPlan] = useState("");
+  const [newOrder, setNewOrder] = useState({
+    id_user: currentUserId,
+    id_mobil: car.id,
+    order_date: "",
+    shipping_date: "",
+    zip_code: "",
+    quantity: quantity,
+    total_payment: price,
+    amount_paid: 0,
+  });
+
+  const updateOrder = useEffect(() => {
+    setNewOrder((prevOrder) => ({
+      ...prevOrder,
+      order_date: new Date(),
+      shipping_date: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
+      zip_code: zipCode,
+      quantity: quantity,
+      total_payment: price,
+      amount_paid: amountPaid,
+      status: status,
+    }));
+  }, [price, status]);
+
+  const postOrder = async () => {
+    const apiUrl = 'http://localhost:3000/addOneOrder';
+    try {
+      console.log(newOrder);
+      const response = await axios.post(apiUrl, newOrder);
+      console.log(response.data);
+      navigate("/orders");
+    } catch (error) {
+      console.log(error);
+      toast("Error when adding order!")
+    }
+  };
+
+  const handleOrder = (event) => {
+    event.preventDefault();
+    
+    const requiredInputs = document.querySelectorAll('input[required]');
+    const requiredSelects = document.querySelectorAll('select[required]');
+    
+    const invalidInputs = [...requiredInputs].filter((input) => !input.validity.valid);
+    const invalidSelects = [...requiredSelects].filter((select) => !select.validity.valid);
+  
+    if (invalidInputs.length > 0 || invalidSelects.length > 0 || paymentPlan === "") {
+      toast("Please fill out all required fields!")
+      return;
+    }
+    postOrder()
+  };
+
+  const handleZipCodeChange = (e) => {
+    const { value } = e.target;
+    setZipCode(value);
+  };
+
+  const handlePaymentPlanChange = (e) => {
+    const { value } = e.target;
+    setPaymentPlan(value);
+    if (value === "Full Payment") {
+      setAmountPaid(price);
+      setStatus("PAID");
+    } else if (value === "Half Payment") {
+      setAmountPaid(price / 2);
+      setStatus("WAITING PAYMENT");
+    } else if (value === "Booking Only") {
+      setAmountPaid(0);
+      setStatus("PENDING");
+    }
+  };
+
   const handleClick = (amount) => () => {
     setQuantity((prev) => {
       if (prev + amount > 0 && prev + amount <= 5) {
@@ -36,7 +119,13 @@ const Order = ({ car }) => {
     <>
       <button
         className="font-bold bg-buttonblue w-[28rem] text-center h-14 rounded-sm text-white mb-4 hover:brightness-75 transition-all duration-300"
-        onClick={() => window.my_modal_1.showModal()}
+        onClick={() => {
+          if (newOrder.id_user === null) {
+            window.my_modal_2.showModal();
+          } else {
+            window.my_modal_1.showModal();
+          }
+        }}
       >
         Order Now
       </button>
@@ -46,7 +135,10 @@ const Order = ({ car }) => {
             <BiWallet className="text-2xl" />
             <h2 className="text-lg font-bold">Enter Order Details</h2>
           </div>
-          <p className="py-4">Purchasing {car.year} {car.name}. Please fill out this form before proceeding.</p>
+          <p className="py-4">
+            Purchasing {car.year} {car.name}. Please fill out this form before
+            proceeding.
+          </p>
           <div className="form-control w-full">
             <FormInput
               width=""
@@ -78,13 +170,18 @@ const Order = ({ car }) => {
                   type="text"
                   placeholder="XXXXXX"
                   max="9"
+                  onChange={handleZipCodeChange}
                 />
               </div>
               <div>
                 <label className="label">
                   <span className="label-text font-bold">Payment</span>
                 </label>
-                <select className="select select-bordered w-full max-w-xs">
+                <select
+                  className="select select-bordered w-full max-w-xs"
+                  onChange={handlePaymentPlanChange}
+                  required
+                >
                   <option disabled selected>
                     Select payment plan
                   </option>
@@ -124,7 +221,9 @@ const Order = ({ car }) => {
                     </span>
                   </label>
                 </div>
-                <h1 className="text-2xl font-thin select-none">{formatRupiah(price)}</h1>
+                <h1 className="text-2xl font-thin select-none">
+                  {formatRupiah(price)}
+                </h1>
               </div>
             </div>
           </div>
@@ -146,8 +245,32 @@ const Order = ({ car }) => {
                 className="h-5"
               ></img>
             </div>
+            <button
+              className="btn"
+              onClick={() => {
+                window.my_modal_1.close();
+                window.location.reload();
+              }}
+            >
+              Close
+            </button>
+            <button
+              className="btn bg-buttonblue text-white"
+              onClick={handleOrder}
+              type="submit"
+            >
+              Order
+            </button>
+            <ToastContainer />
+          </div>
+        </form>
+      </dialog>
+      <dialog id="my_modal_2" className="modal">
+        <form method="dialog" className="modal-box">
+          <p className="py-4">Please log in to proceed with your car order.</p>
+          <div className="modal-action">
+            {/* if there is a button in form, it will close the modal */}
             <button className="btn">Close</button>
-            <button className="btn bg-buttonblue text-white">Order</button>
           </div>
         </form>
       </dialog>
@@ -169,7 +292,8 @@ const FormInput = (props) => {
         placeholder={props.placeholder}
         className={"input input-bordered w-full select-none " + props.width}
         maxLength={props.max}
-        // required
+        onChange={props.onChange}
+        required
       />
     </>
   );

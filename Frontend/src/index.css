@@ -106,4 +106,16 @@
   /* 0.577=tan(30deg)*/
 }
 
+::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-secondary
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-md
+}
+
 

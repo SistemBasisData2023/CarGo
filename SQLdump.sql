@@ -26,7 +26,7 @@ CREATE TABLE Users (
 
 CREATE TYPE payment_status AS ENUM ('PENDING', 'WAITING PAYMENT', 'PAID', 'CANCELED');
 
--- Tabel Order
+-- Tabel Orderrs
 CREATE TABLE Orders (
   id_order SERIAL PRIMARY KEY,
   id_user INTEGER NOT NULL REFERENCES Users (id_user),
