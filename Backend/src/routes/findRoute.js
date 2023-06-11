@@ -12,7 +12,9 @@ router.get('/findMobilByName', findControllers.findMobilByName);
 router.get('/findMobilByType', findControllers.findMobilByType);
 
 router.get('/findOrderByOrderId', findControllers.findOrderByOrderId);
-router.get('/findOrderByUserId', findControllers.findOrderByUserId);
+router.get('/findOrderByUserId/:id', findControllers.findOrderByUserId);
 router.get('/findOrderByMobilId', findControllers.findOrderByMobilId);
+
+router.get('/findOrderJoinMobil/:id', findControllers.findOrderJoinMobil);
 
 module.exports = router;

@@ -46,6 +46,21 @@ async function updateOneUser(user){
     }
 }
 
+const updateUserProfile = async (user) => {
+    const { id, phone_no, full_name, birth_date, address } = user;
+    const query = 'UPDATE users SET phone_no = $2, name = $3, birth_date = $4, address = $5 WHERE id_user = $1';
+    const values = [id, phone_no, full_name, birth_date, address];
+    const result = await db.query(query, values);
+    if(result.rowCount > 0){
+        return {
+            message: 'User profile updated successfully'
+        }
+    }else{
+        return {
+            message: 'No user profile found'
+        }
+    }
+}
 async function addOneUser(user){
     const { username, password, email, phone_no, is_dealer, name, birth_date, address } = user;
     const pass = await bcrypt.hash(password, 10);
@@ -167,8 +182,7 @@ async function getAllOrder(){
     }
 }
 
-async function deleteOneOrder(order){
-    const { id } = order;
+async function deleteOneOrder(id){
     const query = 'DELETE FROM orders WHERE id_order = $1';
     const values = [id];
     const result = await db.query(query, values);
@@ -215,6 +229,7 @@ async function addOneOrder(order){
     }
 }
 
-module.exports = { getAllUser, deleteOneUser, updateOneUser, addOneUser 
+
+module.exports = { getAllUser, deleteOneUser, updateOneUser, updateUserProfile, addOneUser 
                 , getAllMobil, deleteOneMobil, updateOneMobil, addOneMobil, updateMobilImage, updateDealerStatus,
                 getAllOrder, deleteOneOrder, updateOneOrder, addOneOrder};
