@@ -25,7 +25,7 @@ const NavBar = () => {
     <div className="navbar bg-secondary fixed top-0 z-10 grid grid-cols-6 w-screen py-0 h-16">
       <div className="w-fit h-full mx-auto group hover:border-t hover:border-gray-200 my-0 cursor-pointer transition-all duration-300">
         <Link
-          to="/about"
+          to={cookies.is_dealer === "true" ? "/dealer" : "/about"}
           className="group-hover:text-gray-500 text-textblue transition-all duration-300"
         >
           About
@@ -33,7 +33,7 @@ const NavBar = () => {
       </div>
       <div className="w-fit h-full mx-auto group hover:border-t hover:border-gray-200 my-0 cursor-pointer transition-all duration-300">
         <Link
-          to="/vehicles"
+          to={cookies.is_dealer === "true" ? "/dealer" : "/vehicles"}
           className="group-hover:text-gray-500 text-textblue transition-all duration-300"
         >
           Vehicles
@@ -49,7 +49,7 @@ const NavBar = () => {
       </Link>
       <div className="w-fit h-full mx-auto group hover:border-t hover:border-gray-200 my-0 cursor-pointer transition-all duration-300">
         <Link
-          to="/orders"
+          to={cookies.is_dealer === "true" ? "/dealer" : "/orders"}
           className="group-hover:text-gray-500 text-textblue transition-all duration-300"
         >
           Orders

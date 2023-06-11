@@ -119,7 +119,7 @@ const Register = () => {
           </p>
         </div>
       </div>
-      <div>
+      <div className="mt-6">
         <div className="grid grid-cols-2 bg-secondary px-10 py-5 w-fit text-center relative mt-16 gap-x-6 gap-y-2">
           <TextInput required={true} type="text" label="Username" handle={event => setUsername(event.target.value)} value={username} placeholder="Enter username here" />
           <TextInput required={true} type="tel" label="Phone Number" handle={event => setPhone(event.target.value)} value={phone} placeholder="Enter username here" />
@@ -130,14 +130,24 @@ const Register = () => {
           <div className="inline-flex flex-shrink-0 items-center justify-center text-center normal-case text-xl">
             <input type="checkbox" checked={passwordShown} className="checkbox checkbox-primary m-4" onChange={() => setPasswordShown(!passwordShown)} />
             <span className="text-sm text-textblue">Show Password</span>
-          </div>
+          </div>          
           <div className="text-left mt-3 mb-4 text-textblue">
             <span>Date of Birth</span>
-            <DatePicker showIcon="true" required="true" dateFormat="MMMM d, yyyy" selected={birthDate} onChange={(date) => setBirthDate(date)} className="mt-1 text-primary rounded-md" placeholderText="Month Date, Year"/>
+            <DatePicker
+              selected={birthDate}
+              onChange={(date) => setBirthDate(date)}
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              className="bg-secondary"
+              required="true"
+            />
+            {/* <DatePicker showIcon="true" required="true" dateFormat="MMMM d, yyyy" selected={birthDate} onChange={(date) => setBirthDate(date)} className="mt-1 text-primary rounded-md" placeholderText="Month Date, Year"/> */}
           </div>
         </div>
       </div>
-      <div className="bg-secondary px-10 py-4 w-full text-center relative">
+      <div className="bg-secondary px-10 py-4 w-full text-center relative mt-20">
         <button type="submit" className=" bg-buttonblue px-3 py-2 rounded-md mx-auto hover:bg-primary hover:text-gray-600 outline-none border-none text-textblue">Sign Up</button>
         <ToastContainer />
       </div>

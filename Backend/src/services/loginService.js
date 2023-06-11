@@ -53,6 +53,7 @@ async function register (user, session){
 }
 
 async function authorize(session){
+    console.log(session.authorized);
     if(session.authorized){
         return {
             message: 'User is authorized',

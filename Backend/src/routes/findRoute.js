@@ -3,7 +3,7 @@ const router = express.Router();
 
 const findControllers = require('../controllers/findController');
 
-router.get('/findUserById', findControllers.findUserById);
+router.get('/findUserById/:id', findControllers.findUserById);
 router.get('/findUserByUsername', findControllers.findUserByUsername);
 router.get('/findUserByEmail', findControllers.findUserByEmail);
 

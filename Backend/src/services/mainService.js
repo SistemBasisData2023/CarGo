@@ -63,6 +63,22 @@ async function addOneUser(user){
     }
 }
 
+async function updateDealerStatus(user){
+    const { username, email, is_dealer } = user;
+    const query = 'UPDATE users SET is_dealer = $3 WHERE username = $1 OR email = $2';
+    const values = [username, email, is_dealer];
+    const result = await db.query(query, values);
+    if(result.rowCount > 0){
+        return {
+            message: 'Dealer status updated successfully'
+        }
+    }else{
+        return {
+            message: 'No user found'
+        }
+    }
+}
+
 async function getAllMobil(mobil){
     const query = "SELECT * FROM mobil";
     const result = await db.query(query);
@@ -200,5 +216,5 @@ async function addOneOrder(order){
 }
 
 module.exports = { getAllUser, deleteOneUser, updateOneUser, addOneUser 
-                , getAllMobil, deleteOneMobil, updateOneMobil, addOneMobil, updateMobilImage,
+                , getAllMobil, deleteOneMobil, updateOneMobil, addOneMobil, updateMobilImage, updateDealerStatus,
                 getAllOrder, deleteOneOrder, updateOneOrder, addOneOrder};
