@@ -4,6 +4,9 @@ const About = () => {
   document.documentElement.style.height = "100%";
   document.body.style.height = "100%";
 
+  document.documentElement.style.height = "100%";
+  document.body.style.height = "100%";
+
   return (
     <div className="text-center py-8 h-screen align-middle text-textblue center">
       <div className="flex w-96 mt-64 mb-64 mx-auto my-auto">
