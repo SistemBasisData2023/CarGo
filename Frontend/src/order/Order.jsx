@@ -10,6 +10,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
+import { useCookies } from "react-cookie";
+
 const formatRupiah = (number) => {
   const formatter = new Intl.NumberFormat("id-ID", {
     currency: "IDR",
@@ -20,8 +22,9 @@ const formatRupiah = (number) => {
 };
 
 const Order = ({ car }) => {
+  const [cookies, setCookies] = useCookies();
   const navigate = useNavigate();
-  const currentUserId = localStorage.getItem("id_user");
+  const currentUserId = cookies.id_user;
   const [price, setPrice] = useState(car.price);
   const [quantity, setQuantity] = useState(1);
   const [zipCode, setZipCode] = useState("");
@@ -118,7 +121,7 @@ const Order = ({ car }) => {
       <button
         className="font-bold bg-buttonblue w-[28rem] text-center h-14 rounded-sm text-white mb-4 hover:brightness-75 transition-all duration-300"
         onClick={() => {
-          if (newOrder.id_user === null) {
+          if (cookies.id_user === '0') {
             window.my_modal_2.showModal();
           } else {
             window.my_modal_1.showModal();

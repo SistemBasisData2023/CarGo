@@ -62,8 +62,10 @@ const User = () => {
   };
 
   useMemo(() => {
-    getUserInfo();
-    getUserOrder();
+    if(cookies.id_user === '0'){
+      getUserInfo();
+      getUserOrder();
+    }
   }, []);
 
   return (
@@ -79,7 +81,7 @@ const User = () => {
       >
         <div className="grid grid-cols-8">
           {/* Left Side Menu */}
-          {user != null ? (
+          {cookies.id_user !== '0' ? (
             <div className="h-[91.5vh] col-span-2 bg-primary fixed w-[23rem] md:w-[18rem]">
               <div className="black-pattern h-40 w-40 rounded-full mx-auto my-8"></div>
               <div className="w-80 mx-auto">
@@ -133,7 +135,7 @@ const User = () => {
               <h1 className="text-white text-xl font-semibold mt-8">
                 ORDER HISTORY
               </h1>
-              {orders.length === 0 ? (
+              {cookies.id_user === '0' ? (
                 <h1 className="col-span-6 text-center text-white">
                   No Orders Found
                 </h1>
@@ -170,21 +172,21 @@ const OrderCard = ({ order }) => {
         </div>
         <div className="w-full my-6 mr-8  flex justify-end text-white gap-6">
           <div>
-            <h1 className="text-white font-bold text-xl">Order Date</h1>
+            <h1 className="text-white font-bold text-xl md:text-sm">Order Date</h1>
             <h1 className="text-sm">{formatDate(order.order_date)}</h1>
-            <h1 className="text-white font-bold text-xl mt-4">Shipping Date</h1>
+            <h1 className="text-white font-bold text-xl mt-4 md:text-sm">Shipping Date</h1>
             <h1 className="text-sm">{formatDate(order.shipping_date)}</h1>
           </div>
           <div>
-            <h1 className="text-white font-bold text-xl">Zip Code</h1>
+            <h1 className="text-white font-bold text-xl md:text-sm">Zip Code</h1>
             <h1 className="text-sm">{order.zip_code}</h1>
-            <h1 className="text-white font-bold text-xl mt-4">Quantity</h1>
+            <h1 className="text-white font-bold text-xl mt-4 md:text-sm">Quantity</h1>
             <h1 className="text-sm">{order.quantity}</h1>
           </div>
           <div>
-            <h1 className="text-white font-bold text-xl">Amount Paid</h1>
+            <h1 className="text-white font-bold text-xl md:text-sm">Amount Paid</h1>
             <h1 className="text-sm">IDR {formatRupiah(order.amount_paid)}</h1>
-            <h1 className="text-white font-bold text-xl mt-4">Amount Left</h1>
+            <h1 className="text-white font-bold text-xl mt-4 md:text-sm">Amount Left</h1>
             <h1 className="text-sm">
               IDR {formatRupiah(order.total_payment - order.amount_paid)}
             </h1>
@@ -193,13 +195,13 @@ const OrderCard = ({ order }) => {
       </div>
       <div className="grid grid-cols-5">
         <div className="flex col-span-3">
-          <h1 className="text-white font-normal text-xl mx-4 mt-1">
+          <h1 className="text-white font-normal text-xl mx-4 mt-1 md:text-sm">
             Total Amount{" "}
             <span className="font-bold">
               IDR {formatRupiah(order.total_payment)}
             </span>
           </h1>
-          <h1 className="text-white font-normal text-xl mx-4 mt-1">
+          <h1 className="text-white font-normal text-xl mx-4 mt-1 md:text-sm">
             Status <span className="font-bold">{order.status}</span>
           </h1>
         </div>
