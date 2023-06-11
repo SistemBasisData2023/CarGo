@@ -41,6 +41,15 @@ async function updateOneUser(req, res) {
     }
 }
 
+async function updateUserProfile(req, res) {
+    try {
+        const result = await mainServices.updateUserProfile(req.body);
+        res.status(200).json({ message: result});
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+}
+
 async function addOneUser(req, res) {
     try {
         const result = await mainServices.addOneUser(req.body);
@@ -138,7 +147,7 @@ async function getAllOrder(req, res) {
 
 async function deleteOneOrder(req, res) {
     try {
-        const result = await mainServices.deleteOneOrder(req.body);
+        const result = await mainServices.deleteOneOrder(req.params.id);
         res.status(200).json({ message: result});
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -173,6 +182,6 @@ async function addOneOrder(req, res) {
     }
 }
 
-module.exports = { getAllUser, deleteOneUser, updateOneUser, addOneUser,
+module.exports = { getAllUser, deleteOneUser, updateOneUser, updateUserProfile, addOneUser,
                 getAllMobil, deleteOneMobil, updateOneMobil, addOneMobil, updateMobilImage,
                 getAllOrder, deleteOneOrder, updateOneOrder, addOneOrder};

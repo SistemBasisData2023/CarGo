@@ -2,7 +2,7 @@ const findServices = require('../services/findService');
 
 async function findUserById(req, res) {
     try {
-        const result = await findServices.findUserById(req.body);
+        const result = await findServices.findUserById(req.params.id);
         res.status(200).json(result);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -56,7 +56,7 @@ async function findOrderByOrderId(req, res) {
 
 async function findOrderByUserId(req, res) {
     try {
-        const result = await findServices.findOrderByUserId(req.body);
+        const result = await findServices.findOrderByUserId(req.params.id);
         res.status(200).json(result);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -81,8 +81,17 @@ async function findMobilByType(req, res) {
     }
 }
 
+async function findOrderJoinMobil(req, res) {
+    try {
+        const result = await findServices.findOrderJoinMobil(req.params.id);
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+}
+
 module.exports = { findUserById, findUserByUsername, findUserByEmail 
                 , findMobilById, findMobilByName, findMobilByType,
-                findOrderByOrderId, findOrderByUserId, findOrderByMobilId};
+                findOrderByOrderId, findOrderByUserId, findOrderByMobilId, findOrderJoinMobil};
 
 
