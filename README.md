@@ -24,7 +24,7 @@ This website is a platform that provides buyers to purchase cars. Potential buye
 
 ## Entities
 
-# 1. Car
+### 1. ```Car```
 1. car_id
 2. name
 3. year
@@ -34,7 +34,7 @@ This website is a platform that provides buyers to purchase cars. Potential buye
 7. type
 8. description
 
-# 2. User
+### 2. ```User```
 1. user_id
 2. username
 3. password
@@ -46,7 +46,7 @@ This website is a platform that provides buyers to purchase cars. Potential buye
 9. age
 10. address
 
-# 3. Order
+### 3. ```Order```
 1. order_id
 2. user_id
 3. car_id
