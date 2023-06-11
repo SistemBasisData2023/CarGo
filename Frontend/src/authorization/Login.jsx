@@ -61,8 +61,18 @@ const Login = () => {
           maxAge: 3600 * 24,
         });
 
-        localStorage.setItem("id_user", resp.data.user.id_user);
-        localStorage.setItem("username", resp.data.user.username);
+        if(resp.data.user.is_dealer){
+          setCookie("is_dealer", resp.data.user.is_dealer, {
+            path: "/",
+            maxAge: 3600 * 24,
+          });
+        }else{
+          setCookie("is_dealer", false, {
+            path: "/",
+            maxAge: 3600 * 24,
+          });
+        }
+        
       } else {
         toast.error(resp.data.message, {
           position: "bottom-center",
@@ -135,10 +145,17 @@ const Login = () => {
             <input
               type="checkbox"
               checked={passwordShown}
-              className="checkbox checkbox-primary m-4 outline-none"
+              className="checkbox checkbox-primary m-4 outline-none bg-secondary border-buttonblue"
               onChange={() => setPasswordShown(!passwordShown)}
             />
             <span className="text-sm text-gray-300">Show Password</span>
+            {/* <input
+              type="checkbox"
+              checked={isDealer}
+              className="checkbox checkbox-primary m-4 outline-none bg-secondary border-buttonblue"
+              onChange={() => setPasswordShown(!isDealer)}
+            />
+            <span className="text-sm text-gray-300">Login As Dealer</span> */}
           </div>
           <div>
             <button

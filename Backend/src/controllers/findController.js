@@ -2,7 +2,7 @@ const findServices = require('../services/findService');
 
 async function findUserById(req, res) {
     try {
-        const result = await findServices.findUserById(req.body);
+        const result = await findServices.findUserById(req.params.id);
         res.status(200).json(result);
     } catch (err) {
         res.status(400).json({ message: err.message });

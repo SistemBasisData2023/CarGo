@@ -8,6 +8,7 @@ router.get('/getAllUser', mainControllers.getAllUser);
 router.delete('/deleteOneUser', mainControllers.deleteOneUser);
 router.put('/updateOneUser', mainControllers.updateOneUser);
 router.post('/addOneUser', mainControllers.addOneUser);
+router.put('/updateDealerStatus', mainControllers.updateDealerStatus);
 
 // CRUD Mobil
 router.get('/getAllMobil', mainControllers.getAllMobil);

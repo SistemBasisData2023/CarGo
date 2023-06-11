@@ -2,12 +2,14 @@ const {db} = require('../config/connectToDb');
 
 // Find user
 async function findUserById(id_){
-    const {id} = id_;
     const query = 'SELECT * FROM users WHERE id_user = $1';
-    const values = [id];
+    const values = [id_];
     const result = await db.query(query, values);
     if(result.rows.length > 0){
-        return result.rows;
+        user = result.rows[0];
+        return {
+            user: user
+        }
     }else{
         return {
             message: 'User not found'

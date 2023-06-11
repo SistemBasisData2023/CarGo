@@ -1,7 +1,13 @@
-import React from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { FaCalendarDay, FaMapMarkerAlt, FaEdit } from "react-icons/fa";
 import { MdOutlinePayment, MdCancelPresentation } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import { useCookies } from "react-cookie";
+
+import axios from 'axios';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const example = {
     name: "kena",
@@ -29,6 +35,156 @@ const car = {
 };
 
 const About = () => {
+  const [cookies, setCookies] = useCookies();
+
+  const [mobilName, setMobilName] = useState("");
+  const [mobilPrice, setMobilPrice] = useState("");
+  const [mobilYear, setMobilYear] = useState("");
+  const [mobilMpg, setMobilMpg] = useState("");
+  const [mobilTransmission, setMobilTransmission] = useState("");
+  const [mobilType, setMobilType] = useState("");
+  const [mobilDescription, setMobilDescription] = useState("");
+  const [mobilImage, setMobilImage] = useState("");
+
+  const [dealerUsername, setDealerUsername] = useState("");
+  const [dealerEmail, setDealerEmail] = useState("");
+
+  const [user, setUser] = useState("");
+
+  const authorize = async () => {
+    try {
+      const resp = await axios.get('http://localhost:3000/findUserById/' + cookies.id_user);
+      
+      console.log(resp.data.user);
+
+      if(resp.data.message !== "User not found"){
+        await setUser(resp.data.user);
+      }else{
+        await setUser(false);
+      }
+    }catch (err) {
+      console.err(err);
+    }
+  }
+
+  useMemo(() => {
+    authorize();
+  }, [])
+
+  const handleSubmitDealer = async (e) => {
+    e.preventDefault();
+
+    const dealer = {
+      username: dealerUsername,
+      email: dealerEmail,
+      is_dealer: true,
+    };
+
+    try {
+      const resp = await axios.put("http://localhost:3000/updateDealerStatus", dealer).catch();
+
+      console.log(resp);
+
+      if(resp.data.message.message === "Dealer status updated successfully"){
+        toast.success(resp.data.message.message, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+      }else{
+        toast.error(resp.data.message.message, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+
+    } catch (err) {
+      toast.error(err.response.data.message, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+    }
+  }
+
+  const handleSubmitMobil = async (e) => {
+    e.preventDefault();
+
+    const mobil = {
+      name: mobilName,
+      price: mobilPrice,
+      year: mobilYear,
+      mpg: mobilMpg,
+      transmission: mobilTransmission,
+      type: mobilType,
+      description: mobilDescription,
+      image_url: mobilImage,
+    };
+
+    try {
+      const resp = await axios.post("http://localhost:3000/addOneMobil", mobil).catch();
+
+      console.log(resp);
+
+      if(resp.data.message.message === "Mobil added successfully"){
+        toast.success(resp.data.message.message, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+      }else{
+        toast.error(resp.data.message.message, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+
+    } catch (err) {
+      toast.error(err.response.data.message, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+    }
+
+  }
+
   return (
     <>
       <motion.div
@@ -46,13 +202,13 @@ const About = () => {
             <div className="black-pattern h-40 w-40 rounded-full mx-auto my-8"></div>
             <div className="w-80 mx-auto">
               <h1 className="my-2 text-white text-center font-semibold text-2xl">
-                {example.full_name}
+                {user.name}
               </h1>
               <h2 className="my-1 text-white text-center text-sm">
-                {example.email}
+                {user.email}
               </h2>
               <h2 className="my-1 text-white text-center text-sm">
-                {example.name}
+                {user.username}
               </h2>
               <div className="flex text-white mt-4 justify-center">
                 {/* <div className="flex justify-start">
@@ -64,37 +220,39 @@ const About = () => {
                   <p className="my-auto">Add Dealer</p>
                 </button>
                 <dialog id="my_modal_1" className="modal">
-                  <form method="dialog" className="modal-box">
-                   <h3 className="font-bold text-lg ">Add Dealer</h3>
-                   <input type="text" placeholder="Username" className="input input-bordered w-full max-w-xs mt-20" />
-                   <input type="text" placeholder="Email" className="input input-bordered w-full max-w-xs mt-5 mb-5" />
-                   <p className="py-4">Press ESC key or click the button below to close</p>
-                   <div className="modal-action">
-                     <button className="btn">Close</button>
-                     <button className="btn">Enter</button>
-                   </div>
+                  <form method="dialog" className="modal-box" onSubmit={handleSubmitDealer}>
+                    <h3 className="font-bold text-lg ">Add Dealer</h3>
+                    <input type="text" placeholder="Username" onChange={event => setDealerUsername(event.target.value)} value={dealerUsername} className="input input-bordered w-full max-w-xs mt-20" />
+                    <input type="text" placeholder="Email" onChange={event => setDealerEmail(event.target.value)} value={dealerEmail} className="input input-bordered w-full max-w-xs mt-5 mb-5" />
+                    <p className="py-4">Press ESC key or click the button below to close</p>
+                    <div className="modal-action">
+                      <button className="btn" type="reset">Close</button>
+                      <button className="btn" type="submit">Enter</button>
+                    </div>
                   </form>
+                  <ToastContainer />
                 </dialog>
                 <button className="flex justify-center bg-buttonblue rounded-md text-white w-40 h-10 mx-4" onClick={()=>window.my_modal_2.showModal()}>
                   <p className="my-auto">Add Cars</p>
                 </button>
                 <dialog id="my_modal_2" className="modal">
-                  <form method="dialog" className="modal-box">
-                   <h3 className="font-bold text-lg">Add Cars</h3>
-                   <input type="text" placeholder="Name" className="input input-bordered w-full max-w-xs mt-20" />
-                   <input type="text" placeholder="Year" className="input input-bordered w-full max-w-xs mt-5" />
-                   <input type="text" placeholder="Price" className="input input-bordered w-full max-w-xs mt-5" />
-                   <input type="text" placeholder="mpg" className="input input-bordered w-full max-w-xs mt-5" />
-                   <input type="text" placeholder="Transmission" className="input input-bordered w-full max-w-xs mt-5" />
-                   <input type="text" placeholder="Type" className="input input-bordered w-full max-w-xs mt-5" />
-                   <textarea placeholder="Description" className="textarea textarea-bordered w-full max-w-xs mt-5"></textarea>
-                   <input type="text" placeholder="Image Url" className="input input-bordered w-full max-w-xs mt-5 mb-5" />
-                   <p className="py-4">Press ESC key or click the button below to close</p>
-                   <div className="modal-action">
-                     <button className="btn">Close</button>
-                     <button className="btn">Enter</button>
-                   </div>
+                  <form method="dialog" className="modal-box" onSubmit={handleSubmitMobil}>
+                    <h3 className="font-bold text-lg">Add Cars</h3>
+                    <input type="text" placeholder="Name" onChange={event => setMobilName(event.target.value)} value={mobilName} className="input input-bordered w-full max-w-xs mt-20" />
+                    <input type="text" placeholder="Year" onChange={event => setMobilYear(event.target.value)} value={mobilYear} className="input input-bordered w-full max-w-xs mt-5" />
+                    <input type="text" placeholder="Price" onChange={event => setMobilPrice(event.target.value)} value={mobilPrice} className="input input-bordered w-full max-w-xs mt-5" />
+                    <input type="text" placeholder="mpg" onChange={event => setMobilMpg(event.target.value)} value={mobilMpg} className="input input-bordered w-full max-w-xs mt-5" />
+                    <input type="text" placeholder="Transmission" onChange={event => setMobilTransmission(event.target.value)} value={mobilTransmission} className="input input-bordered w-full max-w-xs mt-5" />
+                    <input type="text" placeholder="Type" onChange={event => setMobilType(event.target.value)} value={mobilType} className="input input-bordered w-full max-w-xs mt-5" />
+                    <textarea placeholder="Description" onChange={event => setMobilDescription(event.target.value)} value={mobilDescription} className="textarea textarea-bordered w-full max-w-xs mt-5"></textarea>
+                    <input type="text" placeholder="Image Url" onChange={event => setMobilImage(event.target.value)} value={mobilImage} className="input input-bordered w-full max-w-xs mt-5 mb-5" />
+                    <p className="py-4">Press ESC key or click the button below to close</p>
+                    <div className="modal-action">
+                      <button className="btn" type="reset">Close</button>
+                      <button className="btn" type="submit">Enter</button>
+                    </div>
                   </form>
+                  <ToastContainer />
                 </dialog>
               </div>
             </div>
