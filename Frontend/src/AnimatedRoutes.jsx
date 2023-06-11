@@ -8,6 +8,7 @@ import Description from "./description/Description";
 import User from "./users/User";
 import Login from "./authorization/Login";
 import Register from "./authorization/Register";
+import Dealer from "./dealer/Dealer";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -21,6 +22,7 @@ const AnimatedRoutes = () => {
         <Route path="/orders" element={<User />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/dealer" element={<Dealer />} />
       </Routes>
     </AnimatePresence>
   );
