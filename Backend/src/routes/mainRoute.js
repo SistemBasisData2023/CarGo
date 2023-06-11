@@ -13,6 +13,7 @@ router.put('/updateDealerStatus', mainControllers.updateDealerStatus);
 
 // CRUD Mobil
 router.get('/getAllMobil', mainControllers.getAllMobil);
+router.get('/getAllOrderJoinMobil', mainControllers.getAllOrderJoinMobil);
 router.delete('/deleteOneMobil', mainControllers.deleteOneMobil);
 router.put('/updateOneMobil', mainControllers.updateOneMobil);
 router.post('/addOneMobil', mainControllers.addOneMobil);

@@ -19,8 +19,6 @@ const CardsScroller = () => {
       const resp = await axios.get('http://localhost:3000/getAllMobil');
 
       await setCards(resp.data);
-      
-      console.log(resp.data);
 
     }catch(err){
       console.log(err);

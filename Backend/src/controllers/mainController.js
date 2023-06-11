@@ -91,6 +91,15 @@ async function getAllMobil(req, res) {
     }
 }
 
+async function getAllOrderJoinMobil(req, res) {
+    try {
+        const result = await mainServices.getAllOrderJoinMobil();
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+}
+
 async function deleteOneMobil(req, res) {
     try {
         const result = await mainServices.deleteOneMobil(req.body);
@@ -192,5 +201,5 @@ async function addOneOrder(req, res) {
 }
 
 module.exports = { getAllUser, deleteOneUser, updateOneUser, updateUserProfile, addOneUser,
-                getAllMobil, deleteOneMobil, updateOneMobil, addOneMobil, updateMobilImage, updateDealerStatus,
+                getAllMobil, getAllOrderJoinMobil, deleteOneMobil, updateOneMobil, addOneMobil, updateMobilImage, updateDealerStatus,
                 getAllOrder, deleteOneOrder, updateOneOrder, addOneOrder};

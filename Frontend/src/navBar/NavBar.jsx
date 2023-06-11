@@ -17,7 +17,6 @@ const NavBar = () => {
     axios.get("http://localhost:3000/logout");
     setCookies("id_user", "0", { path: "/" });
     setCookies("username", "0", { path: "/" });
-    localStorage.clear();
     navigate(0);
   };
 
@@ -66,7 +65,7 @@ const NavBar = () => {
               className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <div className="hover:bg-transparent font-bold">{localStorage.getItem("username")}</div>
+                <div className="hover:bg-transparent font-bold">{cookies.username}</div>
               </li>
               <li>
                 <div onClick={handleLogout}>Logout</div>

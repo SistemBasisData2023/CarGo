@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaCalendarDay, FaMapMarkerAlt, FaEdit } from "react-icons/fa";
 import { MdOutlinePayment, MdCancelPresentation } from "react-icons/md";
@@ -9,29 +9,19 @@ import axios from 'axios';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const example = {
-    name: "kena",
-    email: "kresnarmdn@gmail.com",
-    phone_no: "08123696969",
-    full_name: "Kena Ramdani",
+const formatRupiah = (number) => {
+  const formatter = new Intl.NumberFormat("id-ID", {
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  });
+  const formattedPrice = formatter.format(number * 1000000);
+  return formattedPrice;
 };
 
-const order = {
-  quantity: "1",
-  total_price: "660.000.000",
-};
-
-const car = {
-  name: "CarGo© R1T",
-  year: 2022,
-  price: "660.0000",
-  mpg: "25",
-  transmission: "Automatic",
-  type: "EV",
-  description:
-    "CarGo© R1T is an all-electric pickup truck that combines ruggedness, advanced technology, and sustainable performance. It aims to provide an electric alternative in the pickup truck segment, offering versatility, capability, and zero-emission driving.",
-  image_url:
-    "https://media.rivian.com/rivian-main/image/upload/f_auto,q_auto/v1/rivian-com/r1t/Hero_-_Desktop_mpjmqe",
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const formattedDate = date.toISOString().split("T")[0];
+  return formattedDate;
 };
 
 const About = () => {
@@ -51,11 +41,22 @@ const About = () => {
 
   const [user, setUser] = useState("");
 
+  const [orderList, setOrderList] = useState([]);
+
+  const getAllOrderJoinMobil = async () => {
+    try {
+      const resp = await axios.get("http://localhost:3000/getAllOrderJoinMobil");
+
+      await setOrderList(resp.data);
+
+    } catch (err) {
+      console.err(err);
+    }
+  }
+
   const authorize = async () => {
     try {
       const resp = await axios.get('http://localhost:3000/findUserById/' + cookies.id_user);
-      
-      console.log(resp.data.user);
 
       if(resp.data.message !== "User not found"){
         await setUser(resp.data.user);
@@ -68,6 +69,7 @@ const About = () => {
   }
 
   useMemo(() => {
+    getAllOrderJoinMobil();
     authorize();
   }, [])
 
@@ -82,8 +84,6 @@ const About = () => {
 
     try {
       const resp = await axios.put("http://localhost:3000/updateDealerStatus", dealer).catch();
-
-      console.log(resp);
 
       if(resp.data.message.message === "Dealer status updated successfully"){
         toast.success(resp.data.message.message, {
@@ -142,8 +142,6 @@ const About = () => {
     try {
       const resp = await axios.post("http://localhost:3000/addOneMobil", mobil).catch();
 
-      console.log(resp);
-
       if(resp.data.message.message === "Mobil added successfully"){
         toast.success(resp.data.message.message, {
           position: "bottom-center",
@@ -198,10 +196,10 @@ const About = () => {
       >
         <div className="grid grid-cols-8">
           {/* Left Side Menu */}
-          <div className="h-[91.5vh] col-span-2 bg-primary ">
+          <div className="h-[91.5vh] col-span-2 bg-primary fixed">
             <div className="black-pattern h-40 w-40 rounded-full mx-auto my-8"></div>
             <div className="w-80 mx-auto">
-              <h1 className="my-2 text-white text-center font-semibold text-2xl">
+              <h1 className="my-2 text-white text-center font-semibold text-2xl"> 
                 {user.name}
               </h1>
               <h2 className="my-1 text-white text-center text-sm">
@@ -226,7 +224,7 @@ const About = () => {
                     <input type="text" placeholder="Email" onChange={event => setDealerEmail(event.target.value)} value={dealerEmail} className="input input-bordered w-full max-w-xs mt-5 mb-5" />
                     <p className="py-4">Press ESC key or click the button below to close</p>
                     <div className="modal-action">
-                      <button className="btn" type="reset">Close</button>
+                      <button className="btn" type="reset" onClick={() => {window.my_modal_1.close()}}>Close</button>
                       <button className="btn" type="submit">Enter</button>
                     </div>
                   </form>
@@ -248,7 +246,7 @@ const About = () => {
                     <input type="text" placeholder="Image Url" onChange={event => setMobilImage(event.target.value)} value={mobilImage} className="input input-bordered w-full max-w-xs mt-5 mb-5" />
                     <p className="py-4">Press ESC key or click the button below to close</p>
                     <div className="modal-action">
-                      <button className="btn" type="reset">Close</button>
+                      <button className="btn" type="reset" onClick={() => {window.my_modal_2.close()}}>Close</button>
                       <button className="btn" type="submit">Enter</button>
                     </div>
                   </form>
@@ -258,14 +256,19 @@ const About = () => {
             </div>
           </div>
           {/* Right Side Menu */}
-          <div className="grid h-[100%] col-span-6 bg-[#232528]">
+          <div className="grid h-[100%] col-span-2 bg-[#232528]"></div>
+          <div className="grid min-h-[91.5vh] col-span-6 bg-[#232528]">
             <div className="h-[100%] mx-8">
               <h1 className="text-white text-xl font-semibold mt-8">
                 INCOMING ORDER
               </h1>
-
-              <OrderCard />
+              {
+                orderList.map(order => (
+                  <OrderCard key={order.id_order} order={ order }/>
+                ))
+              }
             </div>
+            <ToastContainer />
           </div>
         </div>
       </motion.div>
@@ -275,43 +278,94 @@ const About = () => {
 
 export default About;
 
-const OrderCard = () => {
+const OrderCard = ({ order }) => {
+
+  const handleDeny = async () => {
+    try {
+      const resp = axios.delete('http://localhost:3000/deleteOneOrder/' + order.id_order)
+
+      window.location.reload();
+
+    } catch (err) {
+      console.err(err);
+    }
+  }
+
+  const handleAccept = async () => {
+    try {
+      const payment = {
+        id_order: order.id_order,
+        amount_paid: order.amount_paid,
+        status: "ACCEPTED",
+      }
+
+      const resp = axios.put('http://localhost:3000/updatePayment', payment);
+
+      window.location.reload();
+
+    } catch (err) {
+      console.err(err);
+    }
+  }
+
   return (
     <div className="flex flex-col h-[14rem] bg-[#696a6c] my-4 rounded-xl">
       <div className="flex h-[10rem] bg-[#8a8c90] m-2 rounded-xl">
         <img
-          src={`${car.image_url}`}
-          alt={"CarGo© " + car.name}
-          className="object-cover w-42 h-32 rounded-md m-4"
+          src={`${order.image_url}`}
+          alt={"CarGo© " + order.name}
+          className="object-cover max-w-[13rem] h-32 rounded-md m-4"
         />
-        <div>
-          <h1 className="text-white mt-6 font-bold text-xl">{car.name}</h1>
-          <h1 className="text-white text-sm">{car.year}</h1>
-          <h1 className="text-white text-sm">{car.transmission}</h1>
-          <h1 className="text-white text-sm">{car.mpg} MPG/MPGe</h1>
-          <h1 className="text-white text-sm">{car.type}</h1>
+        <div className="min-w-[15rem]">
+          <h1 className="text-white mt-6 font-bold text-xl">{order.name}</h1>
+          <h1 className="text-white text-sm">{order.year}</h1>
+          <h1 className="text-white text-sm">{order.transmission}</h1>
+          <h1 className="text-white text-sm">{order.mpg} MPG/MPGe</h1>
+          <h1 className="text-white text-sm">{order.type}</h1>
         </div>
-        <div className="w-[30rem] my-auto ml-52 h-[6.8rem]">
-          <h1 className="text-white line-clamp-4 text-justify">
-            {car.description}
-          </h1>
+        <div className="w-full my-6 mr-8  flex justify-end text-white gap-6">
+          <div>
+            <h1 className="text-white font-bold text-xl md:text-sm">Order Date</h1>
+            <h1 className="text-sm">{formatDate(order.order_date)}</h1>
+            <h1 className="text-white font-bold text-xl md:text-sm mt-4">Shipping Date</h1>
+            <h1 className="text-sm">{formatDate(order.shipping_date)}</h1>
+          </div>
+          <div>
+            <h1 className="text-white font-bold text-xl md:text-sm">Zip Code</h1>
+            <h1 className="text-sm">{order.zip_code}</h1>
+            <h1 className="text-white font-bold text-xl md:text-sm mt-4">Quantity</h1>
+            <h1 className="text-sm">{order.quantity}</h1>
+          </div>
+          <div>
+            <h1 className="text-white font-bold text-xl md:text-sm">Amount Paid</h1>
+            <h1 className="text-sm">IDR {formatRupiah(order.amount_paid)}</h1>
+            <h1 className="text-white font-bold text-xl md:text-sm mt-4">Amount Left</h1>
+            <h1 className="text-sm">
+              IDR {formatRupiah(order.total_payment - order.amount_paid)}
+            </h1>
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-2">
         <div className="flex">
-          <h1 className="text-white font-normal text-xl mx-4 mt-1">
+          <h1 className="text-white font-normal text-xl mx-4 mt-1 md:text-sm">
             Total Amount{" "}
-            <span className="font-bold">IDR {order.total_price}</span>
+            <span className="font-bold">
+              IDR {formatRupiah(order.total_payment)}
+            </span>
+          </h1>
+          <h1 className="text-white font-normal text-xl mx-4 mt-1 md:text-sm">
+            Status <span className="font-bold">{order.status}</span>
           </h1>
         </div>
         <div className="flex justify-end">
           <button className="flex justify-center bg-red-400 rounded-md text-black w-36 h-10 mr-4 hover:brightness-90 transition-all duration-300">
             <MdCancelPresentation className="my-auto mr-2" />
-            <p className="my-auto">Deny Order</p>
+            <p className="my-auto" onClick={handleDeny}>Deny Order</p>
           </button>
           <button className="flex justify-center bg-buttonblue rounded-md text-white w-36 h-10 mr-4 hover:brightness-90 transition-all duration-300">
             <MdOutlinePayment className="my-auto mr-2" />
-            <p className="my-auto">Accept Order</p>
+            <p className="my-auto" onClick={handleAccept}>Accept Order</p>
           </button>
         </div>
       </div>

@@ -55,9 +55,7 @@ const Order = ({ car }) => {
   const postOrder = async () => {
     const apiUrl = 'http://localhost:3000/addOneOrder';
     try {
-      console.log(newOrder);
       const response = await axios.post(apiUrl, newOrder);
-      console.log(response.data);
       navigate("/orders");
     } catch (error) {
       console.log(error);

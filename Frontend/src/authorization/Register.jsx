@@ -48,7 +48,6 @@ const Register = () => {
 
     try{
       const resp = await axios.post('http://localhost:3000/register', user).catch();
-      console.log(resp);
 
       if(resp.data.user){
         toast.success(resp.data.message, {

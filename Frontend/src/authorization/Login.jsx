@@ -36,7 +36,6 @@ const Login = () => {
     };
     try {
       const resp = await axios.post("http://localhost:3000/login", user);
-      console.log(resp);
 
       if (resp.data.user) {
         toast.success(resp.data.message, {
@@ -88,7 +87,6 @@ const Login = () => {
         setSuccess(false);
       }
     } catch (err) {
-      console.log(err);
       toast.error(err.response.data.message, {
         position: "bottom-center",
         autoClose: 5000,

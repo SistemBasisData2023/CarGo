@@ -13,6 +13,18 @@ async function getAllUser() {
     }
 }
 
+async function getAllOrderJoinMobil(){
+    const query = 'SELECT Orders.id_order, Mobil.name, Mobil.year, Mobil.price, Mobil.mpg, Mobil.transmission, Mobil.type, Mobil.description, Mobil.image_url, Orders.order_date, Orders.shipping_date, Orders.zip_code, Orders.quantity, Orders.total_payment, Orders.amount_paid, Orders.status FROM Mobil INNER JOIN Orders ON Mobil.id_mobil = Orders.id_mobil;';
+    const result = await db.query(query);
+    if(result.rows.length > 0){
+        return result.rows;
+    }else{
+        return {
+            message: 'Order not found'
+        }
+    }
+}
+
 async function deleteOneUser(user){
     const { id } = user;
     const query = 'DELETE FROM users WHERE id_user = $1';
@@ -231,5 +243,5 @@ async function addOneOrder(order){
 
 
 module.exports = { getAllUser, deleteOneUser, updateOneUser, updateUserProfile, addOneUser 
-                , getAllMobil, deleteOneMobil, updateOneMobil, addOneMobil, updateMobilImage, updateDealerStatus,
+                , getAllMobil, getAllOrderJoinMobil, deleteOneMobil, updateOneMobil, addOneMobil, updateMobilImage, updateDealerStatus,
                 getAllOrder, deleteOneOrder, updateOneOrder, addOneOrder};

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { useCookies } from "react-cookie";
 import { motion } from "framer-motion";
 import { FaCalendarDay, FaMapMarkerAlt, FaEdit } from "react-icons/fa";
 import { MdOutlinePayment, MdCancelPresentation } from "react-icons/md";
@@ -24,7 +25,8 @@ const formatDate = (dateString) => {
 };
 
 const User = () => {
-  const stored_id = localStorage.getItem("id_user");
+  const [cookies, setCookies] = useCookies();
+  const stored_id = cookies.id_user;
   const [user, setUser] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const updateUser = (userData) => {
@@ -53,13 +55,13 @@ const User = () => {
     const apiUrl = `http://localhost:3000/findUserById/${stored_id}`;
     try {
       const response = await axios.get(apiUrl);
-      setUser(response.data);
+      setUser(response.data.user);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
+  useMemo(() => {
     getUserInfo();
     getUserOrder();
   }, []);
@@ -77,28 +79,28 @@ const User = () => {
       >
         <div className="grid grid-cols-8">
           {/* Left Side Menu */}
-          {user && user.length > 0 ? (
-            <div className="h-[91.5vh] col-span-2 bg-primary fixed w-[23rem]">
+          {user != null ? (
+            <div className="h-[91.5vh] col-span-2 bg-primary fixed w-[23rem] md:w-[18rem]">
               <div className="black-pattern h-40 w-40 rounded-full mx-auto my-8"></div>
               <div className="w-80 mx-auto">
                 <h1 className="my-2 text-white text-center font-semibold text-2xl">
-                  {user[0].name}
+                  {user.name}
                 </h1>
                 <h2 className="my-1 text-white text-center text-sm">
-                  {user[0].email}
+                  {user.email}
                 </h2>
                 <h2 className="my-1 text-white text-center text-sm font-bold">
-                  {user[0].phone_no}
+                  {user.phone_no}
                 </h2>
                 <h2 className="my-1 text-white text-center text-sm">
-                  {user[0].username}
+                  {user.username}
                 </h2>
                 <div className="flex text-white mt-4">
                   <FaCalendarDay className="text-white text-2xl mx-auto mr-2" />
                   <h2 className="font-bold text-center mx-auto ml-1 text-xl">
-                    {user[0].birth_date === null
+                    {user.birth_date === null
                       ? "Birthday"
-                      : formatDate(user[0].birth_date)}
+                      : formatDate(user.birth_date)}
                   </h2>
                 </div>
                 <div className="flex text-white mt-4 justify-center">
@@ -107,13 +109,13 @@ const User = () => {
                       <span>
                         <FaMapMarkerAlt className="text-white text-2xl pr-2" />
                       </span>
-                      {user[0].address === null ? "Address" : user[0].address}
+                      {user.address === null ? "Address" : user.address}
                     </h2>
                   </div>
                 </div>
                 <div className="flex justify-center mt-16">
                   <EditProfile
-                    user_id={user[0].id_user}
+                    user_id={user.id_user}
                     startDate={startDate}
                     setStartDate={setStartDate}
                   />
@@ -237,9 +239,7 @@ const EditProfile = ({ user_id, startDate, setStartDate }) => {
   const updateProfile = async () => {
     const apiUrl = "http://localhost:3000/updateUserProfile";
     try {
-      console.log(editProfile);
       const response = await axios.put(apiUrl, editProfile);
-      console.log(response.data);
       window.edit_profile_modal.close();
       window.location.reload();
     } catch (error) {
