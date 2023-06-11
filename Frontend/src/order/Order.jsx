@@ -130,7 +130,7 @@ const Order = ({ car }) => {
         Order Now
       </button>
       <dialog id="my_modal_1" className="modal">
-        <form method="dialog" className="modal-box max-w-[40rem]">
+        <form noValidate method="dialog" className="modal-box max-w-[40rem]">
           <div className="flex gap-2">
             <BiWallet className="text-2xl" />
             <h2 className="text-lg font-bold">Enter Order Details</h2>
@@ -249,7 +249,6 @@ const Order = ({ car }) => {
               className="btn"
               onClick={() => {
                 window.my_modal_1.close();
-                window.location.reload();
               }}
             >
               Close
@@ -269,7 +268,6 @@ const Order = ({ car }) => {
         <form method="dialog" className="modal-box">
           <p className="py-4">Please log in to proceed with your car order.</p>
           <div className="modal-action">
-            {/* if there is a button in form, it will close the modal */}
             <button className="btn">Close</button>
           </div>
         </form>

@@ -7,6 +7,7 @@ const mainControllers = require('../controllers/mainController');
 router.get('/getAllUser', mainControllers.getAllUser);
 router.delete('/deleteOneUser', mainControllers.deleteOneUser);
 router.put('/updateOneUser', mainControllers.updateOneUser);
+router.put('/updateUserProfile', mainControllers.updateUserProfile);
 router.post('/addOneUser', mainControllers.addOneUser);
 
 // CRUD Mobil
@@ -18,7 +19,7 @@ router.put('/updateMobilImage', mainControllers.updateMobilImage);
 
 // CRUD Orders
 router.get('/getAllOrder', mainControllers.getAllOrder);
-router.delete('/deleteOneOrder', mainControllers.deleteOneOrder);
+router.delete('/deleteOneOrder/:id', mainControllers.deleteOneOrder);
 router.put('/updateOneOrder', mainControllers.updateOneOrder);
 router.post('/addOneOrder', mainControllers.addOneOrder);
 

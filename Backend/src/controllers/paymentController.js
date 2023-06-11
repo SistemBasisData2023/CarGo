@@ -1,21 +1,12 @@
 const paymentServices = require('../services/paymentService');
 
-async function updateOneAmountPaid(req, res) {
+async function updatePayment(req, res) {
     try {
-        const result = await paymentServices.updateOneAmountPaid(req.body);
+        const result = await paymentServices.updatePayment(req.body);
         res.status(200).json({ message: result});
     } catch (error) {
         res.status(400).json({ message: err.message });
     }
 }
 
-async function updateOnePaymentStatus(req, res) {
-    try {
-        const result = await paymentServices.updateOnePaymentStatus(req.body);
-        res.status(200).json({ message: result});
-    } catch (error) {
-        res.status(400).json({ message: err.message });
-    }
-}
-
-module.exports = { updateOneAmountPaid , updateOnePaymentStatus}; 
+module.exports = { updatePayment}; 
